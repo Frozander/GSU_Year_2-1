@@ -1,0 +1,1 @@
+clang test.c mylib.c -lm -o ../bin/Test

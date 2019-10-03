@@ -6,8 +6,24 @@
 // malloc için
 #include "stdlib.h"
 
-// I would just inline most of these functions for performance sake
+// printf için
+#include "stdio.h"
+
 // Void fonksiyonlar test edilebilisin diye türlerini değiştirdim
+
+void fail()
+{
+    printf("\033[0;31m");
+    printf(" FAILED\n");
+    printf("\033[0m");
+}
+
+void pass()
+{
+    printf("\033[0;32m");
+    printf(" PASSED\n");
+    printf("\033[0m");
+}
 
 int isLetter(char c)
 {

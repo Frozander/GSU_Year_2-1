@@ -2,6 +2,10 @@
 #ifndef MYLIB_H_
 #define MYLIB_H_
 
+// Fail ve Pass için farklı renkte print
+void fail();
+void pass();
+
 int isLetter(char c);
 int isDigit(char c);
 int isEven(int value);
