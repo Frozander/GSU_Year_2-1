@@ -86,7 +86,7 @@ int main(void)
     else fail();
 
     // test 11
-    printf("Testing findroots with %d, %d and %d: ", 1, -7, 12);
+    printf("Testing findRoots with %d, %d and %d: ", 1, -7, 12);
     double * results_roots = findRoots(1, -7, 12);
     if (results_roots[0] == 4 && results_roots[1] == 3)
         pass();
