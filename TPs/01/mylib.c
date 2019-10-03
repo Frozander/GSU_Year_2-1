@@ -1,6 +1,10 @@
 #include "mylib.h"
 
+// sqrt için
+#include "math.h"
+
 // malloc için
+#include "stdlib.h"
 
 // I would just inline most of these functions for performance sake
 // Void fonksiyonlar test edilebilisin diye türlerini değiştirdim
@@ -35,32 +39,42 @@ int isPrime(int value)
 
 int digitSum(int value)
 {
-    int exp = 1;
     int sum = 0;
-    int remaining = value % exp;
-
-    while (!(remaining == value))
+    int rem;
+    while (value > 0)
     {
-        sum += remaining;
-        exp *= 10;
-        remaining = value % exp;
+        rem = value % 10;
+        sum += rem;
+        value /= 10;
     } 
     return sum;
 }
 
 int reverseNumber(int value)
 {
-    return 0;
+    // Lets have an int 132
+    int reversed = 0;
+    while (value != 0)
+    {
+        reversed *= 10;
+        reversed += value % 10;
+        value /= 10;
+    }
+    return reversed;
 }
 
-void upperCase(char c)
+char upperCase(char c)
 {
-    c += 'a' - 'A';
+    if (c >= 'A' && c <= 'Z') return c;
+    c += 'A' - 'a';
+    return c;
 }
 
-void downcase(char c)
+char downcase(char c)
 {
-    c -= 'a' - 'A';
+    if (c >= 'a' && c <= 'z') return c;
+    c -= 'A' - 'a';
+    return c;
 }
 
 int isUpperCase(char c)
@@ -70,7 +84,7 @@ int isUpperCase(char c)
     return 0;    
 }
 
-int factorial(int value)
+int factoriel(int value)
 {
     int sum = 1;
     for (; value > 0; value--)
@@ -98,7 +112,7 @@ double* findRoots(int a , int b, int c)
     if (delta < 0)
     {
         results[0] = 0;
-        results[0] = 0;
+        results[1] = 0;
     } else
     {
         double root1 = (-b + sqrt(delta)) / (2*a);

@@ -2,17 +2,14 @@
 #ifndef MYLIB_H_
 #define MYLIB_H_
 
-#include <math.h>
-#include "stdlib.h"
-
 int isLetter(char c);
 int isDigit(char c);
 int isEven(int value);
 int isPrime(int value);
 int digitSum(int value);
 int reverseNumber(int value);
-void upperCase(char c);
-void downcase(char c);
+char upperCase(char c);
+char downcase(char c);
 int isUpperCase(char c);
 int factoriel(int value);
 int power(int base, int degree);
