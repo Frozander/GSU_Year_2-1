@@ -140,3 +140,65 @@ double* findRoots(int a , int b, int c)
 
     return results;
 }
+
+int hailstoneNumbers(int value) // Bunu stack kullanmadan nasıl kontrol edeceğimi bulamadım
+{
+    while (value != 1)
+    {
+        if (value % 2)
+            value /= 2;
+        else
+            value = 3 * value + 1;
+    }
+    return 1;
+}
+
+int isPalindromeNumber(int value)
+{
+    if (value == reverseNumber(value))
+        return 1;
+    return 0;
+}
+
+int isPalindromeText(char *c, int size)
+{
+    for (int i = 0; i < size / 2; i++)
+        if (c[i] != c[size - i - 1])
+            return 0;
+    return 1;
+}
+
+int isVowel(char c)
+{
+    char vowels[] = {'a', 'e', 'i', 'o'};
+    c = downcase(c); // Sanity and shorter array
+    for (char i = 0; i < 4; i++)
+        if (c == vowels[i])
+            return 1;
+    return 0;
+}
+
+int exist(int *arr, int size, int value)
+{
+    for (int i = 0; i < size; i++)
+        if (arr[i] == value)
+            return 1;
+    return 0;    
+}
+
+int getIndex(int *arr, int size, int value)
+{
+    for (int i = 0; i < size; i++)
+        if (arr[i] == value)
+            return i;
+    return -1;
+}
+
+int count(int *arr, int size, int value)
+{
+    int counter = 0;
+    for (int i = 0; i < size; i++)
+        if (arr[i] == value)
+            counter++;
+    return counter;
+}

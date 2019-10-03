@@ -19,7 +19,7 @@ int factoriel(int value);
 int power(int base, int degree);
 int add(int value1, int value2);
 double* findRoots(int a, int b, int c);
-void hailstoneNumbers(int value);
+int hailstoneNumbers(int value);
 int isPalindromeNumber(int value);
 int isPalindromeText(char *c, int size);
 int isVowel(char c);
