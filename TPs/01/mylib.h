@@ -1,6 +1,9 @@
 
 #ifndef MYLIB_H_
-#define MYLIB_
+#define MYLIB_H_
+
+#include <math.h>
+#include "stdlib.h"
 
 int isLetter(char c);
 int isDigit(char c);
@@ -14,7 +17,7 @@ int isUpperCase(char c);
 int factoriel(int value);
 int power(int base, int degree);
 int add(int value1, int value2);
-void findRoots(int a, int b, int c);
+double* findRoots(int a, int b, int c);
 void hailstoneNumbers(int value);
 int isPalindromeNumber(int value);
 int isPalindromeText(char *c, int size);
