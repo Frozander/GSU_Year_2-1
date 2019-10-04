@@ -202,3 +202,107 @@ int count(int *arr, int size, int value)
             counter++;
     return counter;
 }
+
+int findMax(int *arr, int size)
+{
+    int max_index = 0;
+    for (int i = 0; i < size; i++)
+        if (arr[max_index] <= arr[i])
+            max_index = i;
+    return max_index;    
+}
+
+int findMax2(int *arr, int size)
+{
+    int max = arr[findMax(arr, size)];
+    int max2_index = 0;
+    
+    for (int i = 0; i < size; i++)
+        if (arr[max2_index] <= arr[i] && arr[i] < max)
+            max2_index = i;
+    return max2_index;
+}
+
+int findMin(int *arr, int size)
+{
+    int min_index = 0;
+    for (int i = 0; i < size; i++)
+        if (arr[min_index] >= arr[i])
+            min_index = i;
+    return min_index;    
+}
+
+int findMin2(int *arr, int size)
+{
+    int min = findMin(arr, size);
+    int min2_index = 0;
+
+    for (int i = 0; i < size; i++)
+        if (arr[i] > min && arr[i] <= arr[min2_index])
+            min2_index = i;
+    return min2_index;
+}
+
+int sumArray(int *arr, int size)
+{
+    int result = 0;
+    for (int i = 0; i < size; i++)
+        result += arr[i];
+    return result;
+}
+
+double averageArr(int *arr, int size)
+{
+    return sumArray(arr, size) / size;
+}
+
+double deviationArr(int *arr, int size)
+{
+    double mean = averageArr(arr, size);
+    double sum = 0;
+    for (int i = 0; i < size; i++)
+        sum += pow(arr[i] - mean, 2);
+    return sqrt(sum / size);
+}
+
+void printMatrix(int **matrix, int row, int column)
+{
+    printf("Printing matrix: \n");
+    for (int i = 0; i < row; i++)
+    {
+        printf("\033[01;35m");
+        printf("| ");
+        for (int j = 0; j < column; j++)
+        {
+            printf("\033[0;33m");
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\033[01;35m");
+        printf("|\n");        
+    }
+    printf("\033[0m");
+}
+
+int** transposeMatrix(int **matrix, int row, int column)
+{
+    int** new_matrix = malloc(sizeof(int*) * row);
+    for (int i = 0; i < row; i++)
+        new_matrix[i] = malloc(sizeof(int) * column);
+    
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            new_matrix[i][j] = matrix[j][i];
+    return new_matrix;
+}
+
+int** fillMatrix(int **matrix, int row, int column)
+{
+    matrix = malloc(sizeof(int*) * row);
+    for (int i = 0; i < row; i++)
+        matrix[i] = malloc(sizeof(int) * column);
+
+    for (int i = 0; i < row; i++)
+        for (int j = 0; j < column; j++)
+            matrix[i][j] = rand() % 10;
+    return matrix;
+}

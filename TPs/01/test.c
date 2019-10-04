@@ -91,6 +91,114 @@ int main(void)
     if (results_roots[0] == 4 && results_roots[1] == 3)
         pass();
     else fail();
+
+    // test 12
+    printf("Testing hailstoneNumbers with %d: ", 5);
+    if (hailstoneNumbers(5))
+        pass();
+    else fail();
+
+    // test 13
+    printf("Testing palindromeNumber with %d: ", 1221);
+    if (isPalindromeNumber(1221))
+        pass();
+    else fail();
+
+    // test 14
+    printf("Testing palindromeText with %s: ", "racecar");
+    if (isPalindromeText("racecar", 7))
+        pass();
+    else fail();
+
+    // test 15
+    printf("Testing isVowel with %c: ", 'a');
+    if (isVowel('a'))
+        pass();
+    else fail();
+
+    // Array for testing
+    int my_arr[] = { 1, 0, 5, 6, 8, 8, 1, 0 };
+
+    // test 16
+    printf("Testing exist with %d: ", 5);
+    if (exist(my_arr, 8, 5))
+        pass();
+    else fail();
+
+    // test 17
+    printf("Testing getIndex with %d: ", 0);
+    if (getIndex(my_arr, 8, 0) == 1)
+        pass();
+    else fail();
+
+    // test 18
+    printf("Testing count with %d: ", 8);
+    if (count(my_arr, 8, 8) == 2)
+        pass();
+    else fail();
+
+    // test 19
+    printf("Testing findMax with my_arr: ");
+    if (my_arr[findMax(my_arr, 8)] == 8)
+        pass();
+    else fail();
+
+    // test 20
+    printf("Testing findMax2 with my_arr: ");
+    if (my_arr[findMax2(my_arr, 8)] == 6)
+        pass();
+    else fail();
+
+    // test 21
+    printf("Testing findMin with my_arr: ");
+    if (my_arr[findMin(my_arr, 8)] == 0)
+        pass();
+    else fail();
+
+    // test 22
+    printf("Testing findMin2 with my_arr: ");
+    if (my_arr[findMin2(my_arr, 8)] == 1)
+        pass();
+    else fail();
+
+    // test 23
+    printf("Testing sumArray with my_arr: ");
+    if (sumArray(my_arr, 8) == 29)
+        pass();
+    else fail();
+
+    // test 24
+    printf("Testing averageArr with my_arr: ");
+    if (averageArr(my_arr, 8) == 29 / 8)
+        pass();
+    else fail();
+
+    // test 25
+    printf("Testing deviationArr with my_arr: ");
+    double min_err = 3.2763356055203 - 1.1583595620532;
+    double max_err = 3.2763356055203 + 1.1583595620532;
+    if (deviationArr(my_arr, 8) >= min_err && deviationArr(my_arr, 8) <= max_err)
+        pass();
+    else fail();
+
+    // Matrix for future tests
+    int** matrix;
+    int** mat_trans;
+
+    // test 26
+    printf("Testing fillMatrix: ");
+    int tester = 1;
+    matrix = fillMatrix(matrix, 3, 3);
+    pass(); // Eğer segfault vermezse çalıştığından dolayı 'if' gerekmiyor
+
+    printf("Testing printMatrix with 3x3 matrix: \n");
+    printMatrix(matrix, 3, 3);
+
+    printf("Testing transposeMatrix with 3x3 matrix: \n");
+    mat_trans = transposeMatrix(matrix, 3, 3);
+    printMatrix(mat_trans, 3, 3);
+
+    pass();
     
     return 0;
 }

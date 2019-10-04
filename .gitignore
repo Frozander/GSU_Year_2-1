@@ -11,6 +11,10 @@
 *.class
 *.sm
 
+# Ignore Windows binaries
+*.exe
+*.obj
+
 # Ignore `bin` dir
 bin/
 # or
