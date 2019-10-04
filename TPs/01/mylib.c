@@ -177,7 +177,7 @@ int isPalindromeText(char *c, int size)
 
 int isVowel(char c)
 {
-    char vowels[] = {'a', 'e', 'i', 'o'};
+    char vowels[] = {'a', 'e', 'i', 'o', 'u'};
     c = downcase(c); // Sanity and shorter array
     for (char i = 0; i < 4; i++)
         if (c == vowels[i])
