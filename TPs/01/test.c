@@ -192,15 +192,15 @@ int main(void)
     // test 26
     printf("Testing fillMatrix: ");
     int tester = 1;
-    matrix = fillMatrix(matrix, 3, 3);
+    matrix = fillMatrix(matrix, 5, 5);
     pass(); // Eğer segfault vermezse çalıştığından dolayı 'if' gerekmiyor
 
     printf("Testing printMatrix with 3x3 matrix: \n");
-    printMatrix(matrix, 3, 3);
+    printMatrix(matrix, 5, 5);
 
     printf("Testing transposeMatrix with 3x3 matrix: \n");
-    mat_trans = transposeMatrix(matrix, 3, 3);
-    printMatrix(mat_trans, 3, 3);
+    mat_trans = transposeMatrix(matrix, 5, 5);
+    printMatrix(mat_trans, 5, 5);
 
     pass();
     
