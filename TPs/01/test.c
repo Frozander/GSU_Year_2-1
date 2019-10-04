@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "mylib.h"
+//srand için
+#include "stdlib.h"
+#include "time.h"
 
 // to complile from terminal, run: gcc test.c mylib.c -o ApplicationName -lm
 // to run the complied application, run: ./ApplicatioName
@@ -8,7 +11,8 @@
 
 int main(void)
 {
-    // a remplir
+    // For randomness' sake
+    srand(time(NULL));
 
     // Test 1
     char c1 = 'b';

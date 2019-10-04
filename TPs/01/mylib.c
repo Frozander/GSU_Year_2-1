@@ -310,6 +310,6 @@ int** fillMatrix(int **matrix, int row, int column)
 
     for (int i = 0; i < row; i++)
         for (int j = 0; j < column; j++)
-            matrix[i][j] = rand() % 10;
+            matrix[i][j] = (rand() % 51) + 50;
     return matrix;
 }

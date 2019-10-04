@@ -11,6 +11,9 @@
 *.class
 *.sm
 
+# Ignore vscode folders
+.vscode/*
+
 # Ignore Windows binaries
 *.exe
 *.obj
