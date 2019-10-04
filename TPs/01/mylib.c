@@ -9,20 +9,27 @@
 // printf için
 #include "stdio.h"
 
+// Renk kodları
+#define C_RESET "\033[0m"
+#define C_RED "\033[0;31m"
+#define C_GREEN "\033[0;32m"
+#define C_MAGENTA "\033[01;35m"
+#define C_YELLOW "\033[0;33m"
+
 // Void fonksiyonlar test edilebilisin diye türlerini değiştirdim
 
 void fail()
 {
-    printf("\033[0;31m");
+    printf(C_RED);
     printf(" FAILED\n");
-    printf("\033[0m");
+    printf(C_RESET);
 }
 
 void pass()
 {
-    printf("\033[0;32m");
+    printf(C_GREEN);
     printf(" PASSED\n");
-    printf("\033[0m");
+    printf(C_RESET);
 }
 
 int isLetter(char c)
@@ -270,17 +277,17 @@ void printMatrix(int **matrix, int row, int column)
     printf("Printing matrix: \n");
     for (int i = 0; i < row; i++)
     {
-        printf("\033[01;35m");
+        printf(C_MAGENTA);
         printf("| ");
         for (int j = 0; j < column; j++)
         {
-            printf("\033[0;33m");
+            printf(C_YELLOW);
             printf("%d ", matrix[i][j]);
         }
-        printf("\033[01;35m");
+        printf(C_MAGENTA);
         printf("|\n");        
     }
-    printf("\033[0m");
+    printf(C_RESET);
 }
 
 int** transposeMatrix(int **matrix, int row, int column)
