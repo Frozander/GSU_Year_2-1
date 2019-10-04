@@ -1,22 +1,22 @@
 #include "mylib.h"
 
-// sqrt için
+// for sqrt
 #include "math.h"
 
-// malloc için
+// for malloc
 #include "stdlib.h"
 
-// printf için
+// for printf in matrix funcs
 #include "stdio.h"
 
-// Renk kodları
+// Color Codes
 #define C_RESET "\033[0m"
 #define C_RED "\033[0;31m"
 #define C_GREEN "\033[0;32m"
 #define C_MAGENTA "\033[01;35m"
 #define C_YELLOW "\033[0;33m"
 
-// Void fonksiyonlar test edilebilisin diye türlerini değiştirdim
+// Changed most void functions to be able to test them in if statements
 
 void fail()
 {
@@ -55,7 +55,7 @@ int isEven(int value)
 
 int isPrime(int value)
 {
-    for (unsigned int i = 2; i < value; i++)
+    for (unsigned int i = 2; i < sqrt(value); i++)
         if (!(value % i)) return 0;
     return 1;
 }
@@ -75,7 +75,6 @@ int digitSum(int value)
 
 int reverseNumber(int value)
 {
-    // Lets have an int 132
     int reversed = 0;
     while (value != 0)
     {
@@ -88,15 +87,15 @@ int reverseNumber(int value)
 
 char upperCase(char c)
 {
-    if (c >= 'A' && c <= 'Z') return c;
-    c += 'A' - 'a';
+    if (c >= 'a' && c <= 'z')
+        c += 'A' - 'a';
     return c;
 }
 
 char downcase(char c)
 {
-    if (c >= 'a' && c <= 'z') return c;
-    c -= 'A' - 'a';
+    if (c >= 'A' && c <= 'Z')
+        c -= 'A' - 'a';
     return c;
 }
 
@@ -115,7 +114,7 @@ int factoriel(int value)
     return sum;
 }
 
-int power(int base, int degree)
+int power(int base, int degree) // Unneccesary recursion
 {
     if (degree <= 0)
         return 1;
@@ -132,7 +131,7 @@ double* findRoots(int a , int b, int c)
     double delta = b*b - 4*a*c;
     double* results = malloc(sizeof(double) * 2);
 
-    if (delta < 0)
+    if (delta < 0) // Imaginary numbers are scary
     {
         results[0] = 0;
         results[1] = 0;
@@ -148,7 +147,7 @@ double* findRoots(int a , int b, int c)
     return results;
 }
 
-int hailstoneNumbers(int value) // Bunu stack kullanmadan nasıl kontrol edeceğimi bulamadım
+int hailstoneNumbers(int value) // Don't know how to check without implementing stack
 {
     while (value != 1)
     {
