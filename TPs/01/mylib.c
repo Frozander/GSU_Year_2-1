@@ -169,7 +169,7 @@ int isPalindromeNumber(int value)
 int isPalindromeText(char *c, int size)
 {
     for (int i = 0; i < size / 2; i++)
-        if (c[i] != c[size - i - 1])
+        if (downcase(c[i]) != downcase(c[size - i - 1])) // sanitisation
             return 0;
     return 1;
 }
