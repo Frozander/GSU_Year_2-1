@@ -55,6 +55,7 @@ int isEven(int value)
 
 int isPrime(int value)
 {
+    if (value < 2) return 0;
     for (unsigned int i = 2; i < sqrt(value); i++)
         if (!(value % i)) return 0;
     return 1;
