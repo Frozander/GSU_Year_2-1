@@ -34,11 +34,18 @@ int main(int argc, char const *argv[])
 
 
     //printf("%s\n%d\n", cursor->data->city, cursor->data->code);
-    int check = add_contact_sl(s_Contacts, contact_1, isCircular);
+    int check = add_contact_sl(s_Contacts, name_1, surname_1, city_1, homeNumber_1, isCircular);
     //add_contact_sl(s_Contacts, contact_2, isCircular);
-    printf(check? "PASSED" : "FAILED");
+    if (check == 1)
+    {
+        printf("pass");
+    }
+    
+
+
     SContactList* cursor = s_Contacts;
-    printf("%s\n%s\n%s\n%s\n", contact_1->name, contact_1->surname, contact_1->city, contact_1->homeNumber);
+    
+    //printf("%s\n%s\n%s\n%s\n", contact_1->name, contact_1->surname, contact_1->city, contact_1->homeNumber);
     printf("%s\n", cursor->data->name);
     //cursor = cursor->next;
     //printf("%s\n%s\n%s\n%s\n", cursor->data->name, cursor->data->surname, cursor->data->city, cursor->data->homeNumber);

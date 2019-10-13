@@ -19,7 +19,7 @@ typedef struct sCityList
 } SCityList;
 
 // return 1 on success, 0 on fail
-int add_contact_sl(SContactList* head, Contact* new_contact, int isCircular);
+int add_contact_sl(SContactList* head, char* name, char* surname, char* city, char* homeNumber, int isCircular);
 int add_city_sl(SCityList* head, City* new_city, int isCircular);
 // return 1 on success, 0 on fail
 int remove_contact_sl(SContactList* head, char* name, char* surname, int isCircular);

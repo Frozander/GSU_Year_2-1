@@ -1,25 +1,37 @@
 #include "SList.h"
 
 // return 1 on success, 0 on fail
-int add_contact_sl(SContactList* head, Contact* new_contact, int isCircular)
+int add_contact_sl(SContactList* head, char* name, char* surname, char* city, char* homeNumber, int isCircular)
 {
-    if (head == NULL)
+    SContactList* cursor = head;
+    if (cursor == NULL)
     {
-        head = malloc(sizeof(SContactList));
-        if (head == NULL) return 0;
-        head->data = new_contact;
+        cursor = malloc(sizeof(SContactList));
+        if (cursor == NULL) return 0;
 
-        if (isCircular == 1) head->next = head;
-        else head->next = NULL;
+        cursor->data = malloc(sizeof(Contact));
+
+        cursor->data->name = malloc(sizeof(char) * NAME_MAX);
+        cursor->data->surname = malloc(sizeof(char) * NAME_MAX);
+        cursor->data->city = malloc(sizeof(char) * NAME_MAX);
+        cursor->data->homeNumber = malloc(sizeof(char) * NUM_MAX);
+
+        strcpy(cursor->data->name, name);
+        strcpy(cursor->data->surname, surname);
+        strcpy(cursor->data->city , city);
+        strcpy(cursor->data->homeNumber, homeNumber);
+
+        if (isCircular == 1)
+            cursor->next = cursor;
+        else
+            cursor->next = NULL;
         return 1;
     }
 
-    SContactList* cursor = head;
+    /*
     SContactList* new_node = malloc(sizeof(SContactList));
     if (new_node == NULL) return 0;
-    new_node->data = malloc(sizeof(Contact));
-    memmove(new_node->data, new_contact, sizeof(Contact));
-    //new_node->data = new_contact;
+    new_node->data = new_contact;
 
     if (isCircular == 0)
     {
@@ -67,6 +79,7 @@ int add_contact_sl(SContactList* head, Contact* new_contact, int isCircular)
             return 1;
         }
     }
+    */
 }
 
 int add_city_sl(SCityList* head, City* new_city, int isCircular)

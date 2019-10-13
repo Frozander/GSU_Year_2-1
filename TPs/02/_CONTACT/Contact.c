@@ -4,10 +4,15 @@ Contact* create_contact(char* name, char* surname, char* city, char* homeNumber)
 {
     Contact* new_contact = malloc(sizeof(Contact));
 
-    new_contact->name = strdup(name);
-    new_contact->surname = strdup(surname);
-    new_contact->city = strdup(city);
-    new_contact->homeNumber = strdup(homeNumber);
+    new_contact->name = malloc(sizeof(char) * NAME_MAX);
+    new_contact->surname = malloc(sizeof(char) * NAME_MAX);
+    new_contact->city = malloc(sizeof(char) * NAME_MAX);
+    new_contact->homeNumber = malloc(sizeof(char) * NUM_MAX);
+
+    strcpy(new_contact->name, name);
+    strcpy(new_contact->surname, surname);
+    strcpy(new_contact->city , city);
+    strcpy(new_contact->homeNumber, homeNumber);
 
     return new_contact;
 }

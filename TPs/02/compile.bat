@@ -1,0 +1,1 @@
+gcc main.c _CONTACT/Contact.c _DL/DList.c _SL/SList.c -o Agenda
