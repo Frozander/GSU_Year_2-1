@@ -19,9 +19,9 @@ SContactList* add_contact_sl(SContactList* head, Contact* new_contact, int isCir
         return cursor;
     }
 
-    /*
+    
     SContactList* new_node = malloc(sizeof(SContactList));
-    if (new_node == NULL) return 0;
+    if (new_node == NULL) return NULL;
     new_node->data = new_contact;
 
     if (isCircular == 0)
@@ -37,12 +37,12 @@ SContactList* add_contact_sl(SContactList* head, Contact* new_contact, int isCir
                 {
                     new_node->next = cursor->next;
                     cursor->next = new_node;
-                    return 1;
+                    return head;
                 }
                 cursor = cursor->next;
             }
             cursor->next = new_node;
-            return 1;
+            return head;
         }
         
     } else
@@ -51,7 +51,7 @@ SContactList* add_contact_sl(SContactList* head, Contact* new_contact, int isCir
         {
             head->next = new_node;
             new_node->next = head;
-            return 1;
+            return head;
         }
         else
         {
@@ -61,16 +61,16 @@ SContactList* add_contact_sl(SContactList* head, Contact* new_contact, int isCir
                 {
                     new_node->next = cursor->next;
                     cursor->next = new_node;
-                    return 1;
+                    return head;
                 }
                 cursor = cursor->next;
             }
             new_node->next = cursor->next;
             cursor->next = new_node;
-            return 1;
+            return head;
         }
     }
-    */
+    
 }
 
 int add_city_sl(SCityList* head, City* new_city, int isCircular)
