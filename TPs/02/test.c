@@ -6,7 +6,7 @@ SContactList* s_Contacts = NULL;
 SCityList* s_Cities = NULL;
 int isCircular = 0;
 
-int main(int argc, char const *argv[])
+int main()
 {
     char name_1[NAME_MAX] = "Batuhan";
     char surname_1[NAME_MAX] = "Ceylan";
@@ -27,24 +27,17 @@ int main(int argc, char const *argv[])
 
     // WORKS
     Contact* contact_1 = create_contact(name_1, surname_1, city_1, homeNumber_1);
-    //Contact* contact_2 = create_contact(name_2, surname_2, city_2, homeNumber_2);
+    Contact* contact_2 = create_contact(name_2, surname_2, city_2, homeNumber_2);
 
-    //add_city_sl(s_Cities, c_1, isCircular);
-    //add_city_sl(s_Cities, c_2, isCircular);
-
+    add_city_sl(s_Cities, c_1, isCircular);
+    add_city_sl(s_Cities, c_2, isCircular);
 
     //printf("%s\n%d\n", cursor->data->city, cursor->data->code);
-    int check = add_contact_sl(s_Contacts, name_1, surname_1, city_1, homeNumber_1, isCircular);
+    s_Contacts = add_contact_sl(s_Contacts, contact_1, isCircular);
     //add_contact_sl(s_Contacts, contact_2, isCircular);
-    if (check == 1)
-    {
-        printf("pass");
-    }
-    
-
-
+    printf(s_Contacts ? "Passed!\n" : "Failed\n");
     SContactList* cursor = s_Contacts;
-    
+
     //printf("%s\n%s\n%s\n%s\n", contact_1->name, contact_1->surname, contact_1->city, contact_1->homeNumber);
     printf("%s\n", cursor->data->name);
     //cursor = cursor->next;

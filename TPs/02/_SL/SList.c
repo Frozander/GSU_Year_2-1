@@ -1,31 +1,22 @@
 #include "SList.h"
 
 // return 1 on success, 0 on fail
-int add_contact_sl(SContactList* head, char* name, char* surname, char* city, char* homeNumber, int isCircular)
+SContactList* add_contact_sl(SContactList* head, Contact* new_contact, int isCircular)
 {
     SContactList* cursor = head;
     if (cursor == NULL)
     {
         cursor = malloc(sizeof(SContactList));
-        if (cursor == NULL) return 0;
+        if (cursor == NULL) return NULL;
 
-        cursor->data = malloc(sizeof(Contact));
-
-        cursor->data->name = malloc(sizeof(char) * NAME_MAX);
-        cursor->data->surname = malloc(sizeof(char) * NAME_MAX);
-        cursor->data->city = malloc(sizeof(char) * NAME_MAX);
-        cursor->data->homeNumber = malloc(sizeof(char) * NUM_MAX);
-
-        strcpy(cursor->data->name, name);
-        strcpy(cursor->data->surname, surname);
-        strcpy(cursor->data->city , city);
-        strcpy(cursor->data->homeNumber, homeNumber);
+        cursor->data = create_contact(new_contact->name, new_contact->surname, new_contact->city, new_contact->homeNumber);
+        //free_contact(new_contact);
 
         if (isCircular == 1)
             cursor->next = cursor;
         else
             cursor->next = NULL;
-        return 1;
+        return cursor;
     }
 
     /*
