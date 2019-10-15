@@ -14,7 +14,7 @@ int main()
     char homeNumber_1[NUM_MAX]  = "7507777";
 
     char name_2[NAME_MAX] = "XDDXD";
-    char surname_2[NAME_MAX] = "LULW";
+    char surname_2[NAME_MAX] = "ALULW";
     char city_2[NAME_MAX] = "ASDASD";
     char homeNumber_2[NUM_MAX]  = "4564564";
 
@@ -34,12 +34,15 @@ int main()
 
     //printf("%s\n%d\n", cursor->data->city, cursor->data->code);
     s_Contacts = add_contact_sl(s_Contacts, contact_1, isCircular);
-    //add_contact_sl(s_Contacts, contact_2, isCircular);
+    s_Contacts = add_contact_sl(s_Contacts, contact_2, isCircular);
     printf(s_Contacts ? "Passed!\n" : "Failed\n");
     SContactList* cursor = s_Contacts;
 
     //printf("%s\n%s\n%s\n%s\n", contact_1->name, contact_1->surname, contact_1->city, contact_1->homeNumber);
     printf("%s\n", cursor->data->name);
+    cursor = cursor->next;
+    printf("%s\n", cursor->data->name);
+
     //cursor = cursor->next;
     //printf("%s\n%s\n%s\n%s\n", cursor->data->name, cursor->data->surname, cursor->data->city, cursor->data->homeNumber);
     //cursor = cursor->next;
