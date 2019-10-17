@@ -35,12 +35,16 @@ void print_tree(Tree* root)
     
 }
 
-Tree* findMin(Tree* root, int code)
+Tree* findMin(Tree* root)
 {
-
+    while (root->left != NULL)
+        root = root->left;
+    return root;    
 }
 
-Tree* findMax(Tree* root, int code)
+Tree* findMax(Tree* root)
 {
-
+    while (root->right != NULL)
+        root = root->right;
+    return root;    
 }

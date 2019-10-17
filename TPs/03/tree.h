@@ -16,8 +16,8 @@ typedef struct tree
 
 Tree* add_node(Tree* root, char* new_name, int new_code);
 void print_tree(Tree* root);
-Tree* findMin(Tree* root, int code);
-Tree* findMax(Tree* root, int code);
+Tree* findMin(Tree* root);
+Tree* findMax(Tree* root);
 
 
 #endif

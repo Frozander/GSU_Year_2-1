@@ -15,5 +15,10 @@ int main(int argc, char const *argv[])
     my_tree = add_node(my_tree, "France", 33);
 
     print_tree(my_tree);
+    printf("\n");
+    Tree *min = findMin(my_tree);
+    Tree *max = findMax(my_tree);
+    printf("Max: %d - %s\n", max->code, max->country);
+    printf("Min: %d - %s\n", min->code, min->country);
     return 0;
 }
