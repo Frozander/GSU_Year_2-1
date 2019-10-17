@@ -12,12 +12,9 @@ int main(int argc, char const *argv[])
     my_tree = add_node(my_tree, "Germany", 49);
     my_tree = add_node(my_tree, "Greece", 30);
     my_tree = add_node(my_tree, "Argentina", 54);
-    my_tree = add_node(my_tree, "Netherlands", 31);
-    my_tree = add_node(my_tree, "France", 33);
-    my_tree = add_node(my_tree, "England", 44);
     my_tree = add_node(my_tree, "Ispanya", 34);
 
-    print_tree(my_tree);
+    print_tree(my_tree, P_POSTORDER);
     printf("\n");
 
     Tree *min = findMin(my_tree);
