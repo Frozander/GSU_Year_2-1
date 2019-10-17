@@ -69,8 +69,6 @@ Tree* remove_node(Tree* root, int target)
 
 void __level_order_print(Tree* root)
 {
-    int rear  = 0;
-    int front = 0;
     Queue* print_queue = create_queue(LEVELORDER_STACK);
     Tree* cursor = root;
 
