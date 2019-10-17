@@ -16,12 +16,23 @@ int main(int argc, char const *argv[])
 
     print_tree(my_tree, P_POSTORDER);
     printf("\n");
+    printf("\n");
+    
+    my_tree = remove_node(my_tree, 49);
+
+    print_tree(my_tree, P_POSTORDER);
+    printf("\n");
+
 
     Tree *min = findMin(my_tree);
     Tree *max = findMax(my_tree);
     
     printf("Max: %d - %s\n", max->code, max->country);
     printf("Min: %d - %s\n", min->code, min->country);
-    
+
+    printf("\n");
+    printf("\n");
+
+    print_tree(my_tree, P_LEVELORDER);    
     return 0;
 }
