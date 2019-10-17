@@ -71,7 +71,7 @@ void __level_order_print(Tree* root)
 {
     int rear  = 0;
     int front = 0;
-    Queue* print_queue = create_queue(512);
+    Queue* print_queue = create_queue(LEVELORDER_STACK);
     Tree* cursor = root;
 
     while (cursor != NULL)

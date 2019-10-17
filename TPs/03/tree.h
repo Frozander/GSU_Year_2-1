@@ -11,6 +11,8 @@
 #define P_POSTORDER  2
 #define P_LEVELORDER 3
 
+#define LEVELORDER_STACK 512
+
 typedef struct tree
 {
     int code;
