@@ -72,6 +72,10 @@ void __level_order_print(Tree* root)
     Queue* print_queue = create_queue(LEVELORDER_STACK);
     Tree* cursor = root;
 
+    // Print Current level
+    // Enqueue left, right nodes (next level)
+    // Dequeue each node, one by one
+    // Repeat until NULL
     while (cursor != NULL)
     {
         printf("%d ", cursor->code);
@@ -89,19 +93,20 @@ void __level_order_print(Tree* root)
 
 void __tree_print(Tree* root, int convention)
 {
-    if (convention == P_INORDER)
+    // If statement for 3 recursive 1 iterative printing function
+    if (convention == P_INORDER) // LNR
     {
         if (root == NULL) return;
         __tree_print(root->left, convention);
         printf("%d ", root->code);
         __tree_print(root->right, convention);
-    } else if (convention == P_POSTORDER)
+    } else if (convention == P_POSTORDER) // LRN
     {
         if (root == NULL) return;
         __tree_print(root->left, convention);
         __tree_print(root->right, convention);
         printf("%d ", root->code);
-    } else if (convention == P_PREORDER)
+    } else if (convention == P_PREORDER) // NLR
     {
         if (root == NULL) return;
         printf("%d ", root->code);
@@ -114,6 +119,7 @@ void __tree_print(Tree* root, int convention)
     }
 }
 
+// NOT MY CODE, USED ONLY FOR VISUALISATION AND CHECKING IF MY FUNCTIONS WORK AS INTENDED
 void __2D_tree_printer(Tree* root, int space)
 {
     if (root == NULL) return;
@@ -174,8 +180,11 @@ Tree* findMax(Tree* root)
     return root;    
 }
 
-
-
+/*
+  .--.      .-'.      .--.      .--.      .--.      .--.      .`-.      .--.
+:::::.\::::::::.\::::::::.\QUEUE FUNCS:::::::.\::::::::.\::::::::.\::::::::.\
+'      `--'      `.-'      `--'      `--'      `--'      `-.'      `--'      `
+*/
 
 Queue* create_queue(unsigned capacity)
 { 
