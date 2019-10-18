@@ -20,13 +20,15 @@ typedef struct tree
 
     struct tree* left;
     struct tree* right;
+    // Only to be used by AVL
+    int height;
 } Tree;
 
 typedef struct queue 
 { 
     int front, rear, size; 
     unsigned capacity; 
-    Tree** data; 
+    Tree** data;
 } Queue; 
 
 // Tree Functions
@@ -49,5 +51,7 @@ void enqueue(Queue* queue, Tree* item);
 Tree* dequeue(Queue* queue);
 Tree* front(Queue* queue);
 Tree* rear(Queue* queue);
+
+// AVL Tree Functions
 
 #endif
