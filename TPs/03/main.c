@@ -57,6 +57,7 @@ int main()
 
     while (menu_state != M_EXIT)
     {
+        printf("\n\n");
         switch (menu_state)
         {
         case M_MAIN:
@@ -64,7 +65,7 @@ int main()
             printf("1-Add Country\n");
             printf("2-Remove Country\n");
             printf("3-Find Max and Min Country\n");
-            printf("4-Print Contact\n");
+            printf("4-Print Countries\n");
             printf("5-EXIT\n");
 
             scanf("%d", &menu_state);
