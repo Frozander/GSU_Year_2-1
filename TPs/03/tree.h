@@ -58,6 +58,7 @@ int max(int a, int b);
 int height(Tree *root);
 Tree* avl_left_rotate(Tree* root);
 Tree* avl_right_rotate(Tree* root);
-int getBalance(Tree* root);
+int get_balance(Tree* root);
 Tree* add_avl_node(Tree* root, char* new_name, int new_code);
+Tree* remove_avl_node(Tree* root, int target);
 #endif

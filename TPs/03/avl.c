@@ -51,7 +51,7 @@ int main()
 
             printf("Code of the country to delete: ");
             scanf("%d", &input_code);
-            main_tree = remove_node(main_tree, input_code);
+            main_tree = remove_avl_node(main_tree, input_code);
             
             menu_state = M_MAIN;
             break;

@@ -284,7 +284,7 @@ Tree* avl_right_rotate(Tree* root)
     return x;
 }
 
-int getBalance(Tree* root) 
+int get_balance(Tree* root) 
 { 
     if (root == NULL) 
         return 0; 
@@ -319,7 +319,7 @@ Tree* add_avl_node(Tree* root, char* new_name, int new_code)
     root->height = 1 + max(height(root->left), height(root->right));
 
     // Get Balance Factor
-    int balance = getBalance(root);
+    int balance = get_balance(root);
 
     // 4 cases?
     if (balance > 1 && new_code < root->left->code)
@@ -338,7 +338,69 @@ Tree* add_avl_node(Tree* root, char* new_name, int new_code)
         root->right = avl_right_rotate(root->right);
         return avl_left_rotate(root);
     }
-
     return root;
+}
+
+Tree* remove_avl_node(Tree* root, int target)
+{
+    // Standard BST deletion
+    if (root == NULL)
+        return root;
+
+    if (target < root->code)
+        root->left = remove_avl_node(root->left, target);
+    else if (target > root->code)
+        root->right = remove_avl_node(root->right, target);
+    else
+    {
+        if (root->left == NULL)
+        {
+            Tree* temp = root->right;
+            free_node(root);
+            return temp;
+        } else if (root->right == NULL)
+        {
+            Tree* temp = root->left;
+            free_node(root);
+            return temp;
+        }
+        // For node with two children
+        // Find the best node on the right side of current node
+        Tree* temp = findMin(root->right);
+        // Copy it to current node;
+        root->code = temp->code;
+        root->country = strdup(temp->country);
+        free(root->country);
+        // Remove the best node on the right to avoid duplicates
+        root->right = remove_node(root->right, temp->code);
+    }
+    // End of standard BST deletion
+
+
+    if (root == NULL) return root;
     
+    // Update height of current node
+    root->height = 1 + max(height(root->left), height(root->right));
+
+    // Get Balance Factor
+    int balance = get_balance(root);
+
+    if (balance > 1 && get_balance(root->left) >= 0)
+        return avl_right_rotate(root); 
+    if (balance < -1 && get_balance(root->right) <= 0)
+        return avl_left_rotate(root); 
+    
+    if (balance > 1 && get_balance(root->left) < 0)
+    { 
+        root->left =  avl_left_rotate(root->left); 
+        return avl_right_rotate(root); 
+    }
+    if (balance < -1 && get_balance(root->right) > 0)
+    { 
+        root->right = avl_right_rotate(root->right); 
+        return avl_left_rotate(root); 
+    }
+  
+    return root; 
+        
 }
