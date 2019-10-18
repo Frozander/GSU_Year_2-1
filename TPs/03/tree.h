@@ -54,5 +54,10 @@ Tree* front(Queue* queue);
 Tree* rear(Queue* queue);
 
 // AVL Tree Functions
-
+int max(int a, int b);
+int height(Tree *root);
+Tree* avl_left_rotate(Tree* root);
+Tree* avl_right_rotate(Tree* root);
+int getBalance(Tree* root);
+Tree* add_avl_node(Tree* root, char* new_name, int new_code);
 #endif
