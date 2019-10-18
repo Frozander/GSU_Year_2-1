@@ -22,7 +22,7 @@ int main()
     my_tree = add_node(my_tree, "Germany", 49);
     my_tree = add_node(my_tree, "Greece", 30);
     my_tree = add_node(my_tree, "Argentina", 54);
-    my_tree = add_node(my_tree, "Ispanya", 34);
+    my_tree = add_node(my_tree, "Spain", 34);
 
     print_tree(my_tree, P_POSTORDER);
     printf("\n");
@@ -54,6 +54,9 @@ int main()
 
     char input_str[30];
     int input_code;
+
+    // for level order (declared outside function to prevent memory leaks and redeclarations with each call)
+    Queue* print_queue = create_queue(LEVELORDER_STACK);
 
     while (menu_state != M_EXIT)
     {
@@ -116,16 +119,16 @@ int main()
             
             if (strcmp(input_str, "postorder") == 0)
             {
-                print_tree(main_tree, P_POSTORDER);
+                print_tree(main_tree, P_POSTORDER, print_queue);
             } else if (strcmp(input_str, "inorder") == 0)
             {
-                print_tree(main_tree, P_INORDER);
+                print_tree(main_tree, P_INORDER, print_queue);
             } else if (strcmp(input_str, "preorder") == 0)
             {
-                print_tree(main_tree, P_PREORDER);
+                print_tree(main_tree, P_PREORDER, print_queue);
             } else if (strcmp(input_str, "levelorder") == 0)
             {
-                print_tree(main_tree, P_LEVELORDER);
+                print_tree(main_tree, P_LEVELORDER, print_queue);
             } else
             {
                 printf("Possible notations: postorder - inorder - preorder - levelorder");

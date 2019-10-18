@@ -67,9 +67,8 @@ Tree* remove_node(Tree* root, int target)
     return root;
 }
 
-void __level_order_print(Tree* root)
+void __level_order_print(Tree* root, Queue* print_queue)
 {
-    Queue* print_queue = create_queue(LEVELORDER_STACK);
     Tree* cursor = root;
 
     // Print Current level
@@ -91,30 +90,30 @@ void __level_order_print(Tree* root)
     
 }
 
-void __tree_print(Tree* root, int convention)
+void __tree_print(Tree* root, int convention, Queue* print_queue)
 {
     // If statement for 3 recursive 1 iterative printing function
     if (convention == P_INORDER) // LNR
     {
         if (root == NULL) return;
-        __tree_print(root->left, convention);
+        __tree_print(root->left, convention, print_queue);
         printf("%d ", root->code);
-        __tree_print(root->right, convention);
+        __tree_print(root->right, convention, print_queue);
     } else if (convention == P_POSTORDER) // LRN
     {
         if (root == NULL) return;
-        __tree_print(root->left, convention);
-        __tree_print(root->right, convention);
+        __tree_print(root->left, convention, print_queue);
+        __tree_print(root->right, convention, print_queue);
         printf("%d ", root->code);
     } else if (convention == P_PREORDER) // NLR
     {
         if (root == NULL) return;
         printf("%d ", root->code);
-        __tree_print(root->left, convention);
-        __tree_print(root->right, convention);
+        __tree_print(root->left, convention, print_queue);
+        __tree_print(root->right, convention, print_queue);
     } else if (convention == P_LEVELORDER)
     {
-        __level_order_print(root);
+        __level_order_print(root, print_queue);
         return;
     }
 }
@@ -144,7 +143,7 @@ void print_tree_2D(Tree* root)
 }
 
 // Wrapper for __tree_print which also wraps __level_order_print
-void print_tree(Tree* root, int convention)
+void print_tree(Tree* root, int convention, Queue* print_queue)
 {
     if (convention <= 0 || convention > 3)
     {
@@ -162,7 +161,7 @@ void print_tree(Tree* root, int convention)
     if (convention == P_LEVELORDER)
         printf("LEVELORDER:\n");
     
-    __tree_print(root, convention);
+    __tree_print(root, convention, print_queue);
     printf("\n");
 }
 

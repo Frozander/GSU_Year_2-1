@@ -33,9 +33,10 @@ typedef struct queue
 Tree* add_node(Tree* root, char* new_name, int new_code);
 void free_node(Tree* root);
 Tree* remove_node(Tree* root, int target);
-void __tree_print(Tree* root, int convention);
+void __level_order_print(Tree* root, Queue* print_queue);
+void __tree_print(Tree* root, int convention, Queue* print_queue);
 void __2D_tree_printer(Tree* root, int space);
-void print_tree(Tree* root, int convention);
+void print_tree(Tree* root, int convention, Queue* print_queue);
 void print_tree_2D(Tree* root);
 Tree* findMin(Tree* root);
 Tree* findMax(Tree* root);
