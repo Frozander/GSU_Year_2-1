@@ -54,7 +54,6 @@ Tree* remove_node(Tree* root, int target)
         Tree* temp = findMin(root->right);
         // Copy it to current node;
         root->code = temp->code;
-        free(root->country);
         root->country = strdup(temp->country);
         // Remove the best node on the right to avoid duplicates
         root->right = remove_node(root->right, temp->code);
@@ -370,7 +369,6 @@ Tree* remove_avl_node(Tree* root, int target)
         // Copy it to current node;
         root->code = temp->code;
         root->country = strdup(temp->country);
-        free(root->country);
         // Remove the best node on the right to avoid duplicates
         root->right = remove_node(root->right, temp->code);
     }
