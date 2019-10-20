@@ -141,19 +141,20 @@ void print_tree(Tree* root, int convention, Queue* print_queue)
 {
     if (convention < 0 || convention > 3)
     {
-        printf("Invalid Convention");
+        printf("Invalid Convention\n");
         return;
     }
     
-    printf("Tree in ");
+    printf("\nTree in ");
     if (convention == P_INORDER)
-        printf("INORDER:\n");
+        printf("INORDER: ");
     if (convention == P_POSTORDER)
-        printf("POSTORDER:\n");
+        printf("POSTORDER: ");
     if (convention == P_PREORDER)
-        printf("PREORDER:\n");
+        printf("PREORDER: ");
     if (convention == P_LEVELORDER)
-        printf("LEVELORDER:\n");
+        printf("LEVELORDER: ");
+    
     
     __tree_print(root, convention, print_queue);
     printf("\n");

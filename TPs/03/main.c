@@ -46,7 +46,7 @@ int main()
 
     while (menu_state != M_EXIT)
     {
-        printf("\n\n");
+        printf("\n");
         switch (menu_state)
         {
         case M_MAIN:
@@ -57,6 +57,7 @@ int main()
             printf("4-Print Countries\n");
             printf("5-EXIT\n");
 
+            printf("\nInput : ");
             scanf("%d", &menu_state);
             break;
         
@@ -117,16 +118,12 @@ int main()
                 print_tree(main_tree, P_LEVELORDER, print_queue);
             } else
             {
-                printf("Possible notations: postorder - inorder - preorder - levelorder");
+                printf("\nPossible notations: postorder - inorder - preorder - levelorder\n");
             }
 
             menu_state = M_MAIN;
             break;
 
-        case M_EXIT:
-            printf("Exiting!\n");
-            break;
-        
         default:
             printf("Unknown Input, reseting menu!\n");
 
@@ -136,6 +133,8 @@ int main()
 
         
     }
+
+    printf("\n\nExiting...\n");
     
     return 0;
 }
