@@ -10,11 +10,6 @@ B_Tree* add_node(B_Tree* root, char* new_name, int new_code)
         root->data[0] = new_code;
         return root;
     }
-    // Recursively add
-    if (root->code < new_code)
-        root->right = add_node(root->right, new_name, new_code);
-    else if (root->code > new_code)
-        root->left = add_node(root->left, new_name, new_code);
     return root;
 }
 
@@ -27,7 +22,7 @@ B_Tree* remove_node(B_Tree* root, int target)
 {
     // Exit case
     if (root == NULL) return root;
-    
+
     // Find the node to delete
     if (target < root->code)
         root->left = remove_node(root->left, target);
@@ -78,10 +73,10 @@ void __level_order_print(B_Tree* root, Queue* print_queue)
         if (cursor->right != NULL)
             enqueue(print_queue, cursor->right);
 
-        cursor = dequeue(print_queue);                
+        cursor = dequeue(print_queue);
     }
-    
-    
+
+
 }
 
 void __tree_print(B_Tree* root, int convention, Queue* print_queue)
@@ -120,7 +115,7 @@ void print_tree(B_Tree* root, int convention, Queue* print_queue)
         printf("Invalid Convention\n");
         return;
     }
-    
+
     printf("\nTree in ");
     if (convention == P_INORDER)
         printf("INORDER: ");
@@ -130,8 +125,8 @@ void print_tree(B_Tree* root, int convention, Queue* print_queue)
         printf("PREORDER: ");
     if (convention == P_LEVELORDER)
         printf("LEVELORDER: ");
-    
-    
+
+
     __tree_print(root, convention, print_queue);
     printf("\n");
 }
@@ -140,14 +135,14 @@ B_Tree* findMin(B_Tree* root)
 {
     while (root->left != NULL)
         root = root->left;
-    return root;    
+    return root;
 }
 
 B_Tree* findMax(B_Tree* root)
 {
     while (root->right != NULL)
         root = root->right;
-    return root;    
+    return root;
 }
 
 /*
@@ -157,16 +152,16 @@ B_Tree* findMax(B_Tree* root)
 */
 
 Queue* create_queue(unsigned capacity)
-{ 
-    Queue* queue = (Queue*) malloc(sizeof(Queue)); 
-    queue->capacity = capacity; 
-    queue->front = queue->size = 0;  
-    queue->rear = capacity - 1;  // This is important, see the enqueue 
+{
+    Queue* queue = (Queue*) malloc(sizeof(Queue));
+    queue->capacity = capacity;
+    queue->front = queue->size = 0;
+    queue->rear = capacity - 1;  // This is important, see the enqueue
     queue->data = malloc(queue->capacity * sizeof(B_Tree*));
-    return queue; 
-} 
+    return queue;
+}
 
-int is_full(Queue* queue) 
+int is_full(Queue* queue)
 {
     return (queue->size == queue->capacity);
 }
@@ -187,25 +182,25 @@ void enqueue(Queue* queue, B_Tree* item)
 }
 
 B_Tree* dequeue(Queue* queue)
-{ 
-    if (is_empty(queue)) 
+{
+    if (is_empty(queue))
         return NULL;
-    B_Tree* item = queue->data[queue->front]; 
-    queue->front = (queue->front + 1) % queue->capacity; 
-    queue->size = queue->size - 1; 
+    B_Tree* item = queue->data[queue->front];
+    queue->front = (queue->front + 1) % queue->capacity;
+    queue->size = queue->size - 1;
     return item;
 }
 
 B_Tree* front(Queue* queue)
-{ 
-    if (is_empty(queue)) 
-        return NULL; 
-    return queue->data[queue->front]; 
+{
+    if (is_empty(queue))
+        return NULL;
+    return queue->data[queue->front];
 }
 
 B_Tree* rear(Queue* queue)
-{ 
-    if (is_empty(queue)) 
-        return NULL; 
-    return queue->data[queue->rear]; 
+{
+    if (is_empty(queue))
+        return NULL;
+    return queue->data[queue->rear];
 }

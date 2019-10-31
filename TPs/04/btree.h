@@ -12,22 +12,22 @@
 #define P_LEVELORDER 3
 
 #define LEVELORDER_STACK 512
-#define MAX_SIZE 2
+#define M_VAL 3
 
 typedef struct b_tree
 {
     int data_size;
-    int data[MAX_SIZE];
+    int data[M_VAL - 1];
 
-    struct b_tree* leafs[MAX_SIZE + 1];
+    struct b_tree* leafs[M_VAL];
 } B_Tree;
 
-typedef struct queue 
-{ 
-    int front, rear, size; 
-    unsigned capacity; 
+typedef struct queue
+{
+    int front, rear, size;
+    unsigned capacity;
     B_Tree** data;
-} Queue; 
+} Queue;
 
 // B Tree Functions
 B_Tree* add_node(B_Tree* root, int new_data);
