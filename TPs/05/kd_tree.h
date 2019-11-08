@@ -2,6 +2,7 @@
 #define __KD_TREE_H
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef K_DIM
     #define K_DIM 2
@@ -14,15 +15,7 @@ typedef struct kd_tree
     struct kd_tree *right;
 } KD_Tree;
 
-typedef enum status_control {
-    SUCCESS,
-    FAILURE,
-    INSERT,
-    NULL_ERR
-} StatusControl;
-
-
 KD_Tree *create_node(int arg_count, int* data_array);
-StatusControl insert_node(KD_Tree** root, int* data_array);
+KD_Tree *insert_node(KD_Tree* root, int* data_array, int coord);
 
 #endif
