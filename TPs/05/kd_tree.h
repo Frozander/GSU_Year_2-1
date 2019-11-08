@@ -31,14 +31,14 @@ typedef struct tree_data
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //           TREE FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
-KD_Tree *create_node(int arg_count, char new_code, char* new_name, int* data_array);
-KD_Tree *insert_node(KD_Tree* root, char new_code, char* new_name, int* data_array);
-KD_Tree *init_tree(KD_Tree* root, char* filename);
+KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array);
+KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array);
+KD_Tree *init_tree(KD_Tree *root, char *filename);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 #define LINE_MAX 256
 
-Tree_Data* read_data(char* filename);
-unsigned int line_counter(char* filename);
+Tree_Data* read_data(char *filename);
+unsigned int line_counter(char *filename);
 #endif

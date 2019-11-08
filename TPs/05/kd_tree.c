@@ -6,7 +6,7 @@ int coord_offset = 0;
 //           TREE FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
-KD_Tree *create_node(int arg_count, char new_code, char* new_name, int* data_array)
+KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array)
 {
     KD_Tree *new_node = malloc(sizeof(KD_Tree));
     if (new_node == NULL)
@@ -31,12 +31,12 @@ KD_Tree *create_node(int arg_count, char new_code, char* new_name, int* data_arr
     return new_node;
 }
 
-KD_Tree *insert_node(KD_Tree* root, char new_code, char* new_name, int* data_array)
+KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array)
 {
     // Exit condition
     if (root == NULL)
     {
-        KD_Tree* new_node = create_node(K_DIM, new_code, new_name, data_array);
+        KD_Tree *new_node = create_node(K_DIM, new_code, new_name, data_array);
         if (new_node == NULL) return NULL;
         root = new_node;
         return root;
@@ -59,13 +59,17 @@ KD_Tree *insert_node(KD_Tree* root, char new_code, char* new_name, int* data_arr
     return root;
 }
 
+KD_Tree *init_tree(KD_Tree *root, char *filename)
+{
+
+}
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
 // Unfortunately this function only works for my specific type of csv
-Tree_Data* read_data(char* filename)
+Tree_Data *read_data(char *filename)
 {
     unsigned int l_count = line_counter(filename);
     Tree_Data *data_list = malloc(sizeof(Tree_Data) * (l_count - 1));
@@ -93,7 +97,7 @@ Tree_Data* read_data(char* filename)
     return data_list;
 }
 
-unsigned int line_counter(char* filename)
+unsigned int line_counter(char *filename)
 {
     FILE *file_pointer;
     file_pointer = fopen(filename, "r");
