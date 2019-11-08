@@ -15,7 +15,12 @@ int main(int argc, char const *argv[])
 
     main_root = init_tree(main_root, "data.csv");
     print_tree(main_root, P_INORDER);
-
+    main_root = kill_tree(main_root);
+    if (main_root == NULL)
+    {
+        printf("Successfully killed the tree\n");
+    }
+    
     
     return 0;
 }

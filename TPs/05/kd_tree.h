@@ -40,7 +40,7 @@ KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_arr
 KD_Tree *init_tree(KD_Tree *root, char *filename);
 void __tree_print(KD_Tree *root, int convention);
 void print_tree(KD_Tree *root, int convention);
-void kill_tree(KD_Tree *root);
+KD_Tree *kill_tree(KD_Tree *root);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢

@@ -117,12 +117,13 @@ void print_tree(KD_Tree *root, int convention)
     printf("\n");
 }
 
-void kill_tree(KD_Tree *root)
+KD_Tree *kill_tree(KD_Tree *root)
 {
-    if (root == NULL) return;
+    if (root == NULL) return NULL;
     kill_tree(root->left);
     kill_tree(root->right);
     free(root);
+    root = NULL;
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
