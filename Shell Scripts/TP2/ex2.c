@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-    
+    char *list = argv[1];
     return 0;
 }
