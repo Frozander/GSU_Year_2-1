@@ -90,6 +90,7 @@ Tree_Data* read_data(char* filename)
         i++;
     }
     fclose(file_pointer);
+    return data_list;
 }
 
 unsigned int line_counter(char* filename)
