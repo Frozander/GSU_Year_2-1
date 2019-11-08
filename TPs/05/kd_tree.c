@@ -86,7 +86,7 @@ Tree_Data* read_data(char* filename)
     fgets(line, LINE_MAX, file_pointer);
     while (fgets(line, LINE_MAX, file_pointer) != NULL)
     {
-        sscanf(line, "%c, %s, %d, %d", &data_list[i].door_code, data_list[i].door_name, data_list[i].data[0], data_list[i].data[1]);
+        sscanf(line, "%c, %s, %d, %d", &data_list[i].door_code, data_list[i].door_name, &(data_list[i].data[0]), &(data_list[i].data[1]));
         i++;
     }
     fclose(file_pointer);
