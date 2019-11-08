@@ -38,8 +38,9 @@ typedef struct tree_data
 KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array);
 KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array);
 KD_Tree *init_tree(KD_Tree *root, char *filename);
-void __tree_print(KD_Tree* root, int convention);
-void print_tree(KD_Tree* root, int convention);
+void __tree_print(KD_Tree *root, int convention);
+void print_tree(KD_Tree *root, int convention);
+void kill_tree(KD_Tree *root);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢

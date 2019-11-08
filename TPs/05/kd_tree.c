@@ -73,7 +73,7 @@ KD_Tree *init_tree(KD_Tree *root, char *filename)
     return root;
 }
 
-void __tree_print(KD_Tree* root, int convention)
+void __tree_print(KD_Tree *root, int convention)
 {
     // If statement for 3 recursive 1 iterative printing function
     if (convention == P_INORDER) // LNR
@@ -97,7 +97,7 @@ void __tree_print(KD_Tree* root, int convention)
     }
 }
 
-void print_tree(KD_Tree* root, int convention)
+void print_tree(KD_Tree *root, int convention)
 {
     if (convention < 0 || convention > 3)
     {
@@ -115,6 +115,14 @@ void print_tree(KD_Tree* root, int convention)
     
     __tree_print(root, convention);
     printf("\n");
+}
+
+void kill_tree(KD_Tree *root)
+{
+    if (root == NULL) return;
+    kill_tree(root->left);
+    kill_tree(root->right);
+    free(root);
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
