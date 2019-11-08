@@ -10,6 +10,10 @@
     #define K_DIM 2
 #endif
 
+#define P_PREORDER   0
+#define P_INORDER    1
+#define P_POSTORDER  2
+
 typedef struct kd_tree
 {
     char door_code;
@@ -34,6 +38,8 @@ typedef struct tree_data
 KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array);
 KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array);
 KD_Tree *init_tree(KD_Tree *root, char *filename);
+void __tree_print(KD_Tree* root, int convention);
+void print_tree(KD_Tree* root, int convention);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢

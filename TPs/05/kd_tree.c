@@ -61,7 +61,60 @@ KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_arr
 
 KD_Tree *init_tree(KD_Tree *root, char *filename)
 {
+    unsigned int l_count = line_counter(filename) - 1;
+    Tree_Data *data_list = read_data(filename);
 
+    for (unsigned int i = 0; i < l_count; i++)
+    {
+        // Inserts alphabethically since csv is alphabetically sorted already
+        // So needs a sorting algorithm for inserting with different values
+        root = insert_node(root, data_list[i].door_code, data_list[i].door_name, data_list[i].data);
+    }
+    return root;
+}
+
+void __tree_print(KD_Tree* root, int convention)
+{
+    // If statement for 3 recursive 1 iterative printing function
+    if (convention == P_INORDER) // LNR
+    {
+        if (root == NULL) return;
+        __tree_print(root->left, convention);
+        printf("%c ", root->door_code);
+        __tree_print(root->right, convention);
+    } else if (convention == P_POSTORDER) // LRN
+    {
+        if (root == NULL) return;
+        __tree_print(root->left, convention);
+        __tree_print(root->right, convention);
+        printf("%c ", root->door_code);
+    } else if (convention == P_PREORDER) // NLR
+    {
+        if (root == NULL) return;
+        printf("%c ", root->door_code);
+        __tree_print(root->left, convention);
+        __tree_print(root->right, convention);
+    }
+}
+
+void print_tree(KD_Tree* root, int convention)
+{
+    if (convention < 0 || convention > 3)
+    {
+        printf("Invalid Convention\n");
+        return;
+    }
+    
+    printf("\nTree in ");
+    if (convention == P_INORDER)
+        printf("INORDER: ");
+    if (convention == P_POSTORDER)
+        printf("POSTORDER: ");
+    if (convention == P_PREORDER)
+        printf("PREORDER: ");
+    
+    __tree_print(root, convention);
+    printf("\n");
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
