@@ -9,8 +9,10 @@ KD_Tree* main_root = NULL;
 
 int main(int argc, char const *argv[])
 {
-    int data[] = {6, 9};
-    main_root = insert_node(main_root, data, 0);
+    int data[] = {28, 16};
+    char name[] = "Cevahir Bedesteni - Merkez";
+    char code = 'T';
+    main_root = insert_node(main_root, code, name, data);
 
     // TESTING
     if (main_root == NULL)
@@ -20,7 +22,7 @@ int main(int argc, char const *argv[])
     }
 
     KD_Tree *cursor = main_root;
-    printf("(%d, %d)\n", cursor->data[0], cursor->data[1]);
+    printf("%c)%s - (%d, %d)\n", code, name, cursor->data[0], cursor->data[1]);
     
     return 0;
 }
