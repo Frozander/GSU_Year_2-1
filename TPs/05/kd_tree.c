@@ -2,6 +2,10 @@
 
 int coord_offset = 0;
 
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//           TREE FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
 KD_Tree *create_node(int arg_count, char new_code, char* new_name, int* data_array)
 {
     KD_Tree *new_node = malloc(sizeof(KD_Tree));
@@ -16,14 +20,14 @@ KD_Tree *create_node(int arg_count, char new_code, char* new_name, int* data_arr
     // Insert door data
     new_node->door_code = new_code;
     strcpy(new_node->door_name, new_name);
-    
+
     // Insert Coordinates
     int i;
     for (i = 0; i < arg_count; i++)
     {
         new_node->data[i] = data_array[i];
     }
-    
+
     return new_node;
 }
 
@@ -53,4 +57,58 @@ KD_Tree *insert_node(KD_Tree* root, char new_code, char* new_name, int* data_arr
     }
     coord_offset = 0;
     return root;
+}
+
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         FILE STREAM FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+// Unfortunately this function only works for my specific type of csv
+Tree_Data* read_data(char* filename)
+{
+    unsigned int l_count = line_counter(filename);
+    Tree_Data *data_list = malloc(sizeof(Tree_Data) * (l_count - 1));
+
+    FILE *file_pointer;
+    file_pointer = fopen(filename, "r");
+    if (file_pointer == NULL)
+    {
+        printf("Could not open the file %s!", filename);
+        return 0;
+    }
+
+    char line[LINE_MAX];
+    char buffer[S_LEN];
+    int i = 0;
+
+    // Discard first line for now
+    fgets(line, LINE_MAX, file_pointer);
+    while (fgets(line, LINE_MAX, file_pointer) != NULL)
+    {
+        sscanf(line, "%c, %s, %d, %d", &data_list[i].door_code, data_list[i].door_name, data_list[i].data[0], data_list[i].data[1]);
+        i++;
+    }
+    fclose(file_pointer);
+}
+
+unsigned int line_counter(char* filename)
+{
+    FILE *file_pointer;
+    file_pointer = fopen(filename, "r");
+
+    if (file_pointer == NULL)
+    {
+        printf("Could not open the file %s!", filename);
+        return 0;
+    }
+
+    char c;
+    unsigned int l_count = 0;
+    for (c = getc(file_pointer); c != EOF; c = getc(file_pointer))
+        if (c == '\n')
+            ++l_count;
+
+    fclose(file_pointer);
+    return l_count;
 }

@@ -23,6 +23,8 @@ int main(int argc, char const *argv[])
 
     KD_Tree *cursor = main_root;
     printf("%c)%s - (%d, %d)\n", code, name, cursor->data[0], cursor->data[1]);
+
+    read_data("data.csv");
     
     return 0;
 }
