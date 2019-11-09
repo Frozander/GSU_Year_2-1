@@ -46,6 +46,7 @@ typedef struct tree_data
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //           TREE FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
 KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array);
 KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array);
 KD_Tree *init_tree(KD_Tree *root, Tree_Data *data_list, int len);
@@ -61,6 +62,7 @@ KD_Tree *search_kdtree(KD_Tree *root, int token, Queue **queue);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //           QUEUE FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
 Queue *create_queue(unsigned capacity);
 int is_full(Queue *queue);
 int is_empty(Queue *queue);
@@ -73,6 +75,7 @@ void empty_queue(Queue *queue);
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
 #define LINE_MAX 256
 
 Tree_Data *read_data(char *filename);
