@@ -63,11 +63,11 @@ KD_Tree *init_tree(KD_Tree *root, char *filename)
 {
     unsigned int l_count = line_counter(filename) - 1;
     Tree_Data *data_list = read_data(filename);
-
     for (unsigned int i = 0; i < l_count; i++)
     {
         // Inserts alphabethically since csv is alphabetically sorted already
         // So needs a sorting algorithm for inserting with different values
+        printf("%c)%s - (%d, %d)\n", data_list[i].door_code, data_list[i].door_name, data_list[i].data[0], data_list[i].data[1]);
         root = insert_node(root, data_list[i].door_code, data_list[i].door_name, data_list[i].data);
     }
     return root;
@@ -117,6 +117,13 @@ void print_tree(KD_Tree *root, int convention)
     printf("\n");
 }
 
+void print_node(KD_Tree *root)
+{
+    if (root == NULL)
+        return;    
+    printf("%c)%s - (%d, %d)\n", root->door_code, root->door_name, root->data[0], root->data[1]);
+}
+
 KD_Tree *kill_tree(KD_Tree *root)
 {
     if (root == NULL) return NULL;
@@ -124,6 +131,176 @@ KD_Tree *kill_tree(KD_Tree *root)
     kill_tree(root->right);
     free(root);
     root = NULL;
+}
+
+/*  IMPORTANT:
+    Use of the __funcname type funtions alone is not advised since
+    they don't have neccesary sanity checks which are done in wrapper funtions.
+*/
+KD_Tree *__search_index(KD_Tree *root, char key, Queue **queue)
+{
+    Queue* q_cursor = *queue;
+    while (root != NULL)
+    {
+        if (root->door_code == key)
+            return root;
+        
+        enqueue(q_cursor, root->left);
+        enqueue(q_cursor, root->right);
+        root = dequeue(q_cursor);
+    }
+    printf("Could not find the key: %c\n", key);
+    return NULL;
+}
+
+KD_Tree *__search_name(KD_Tree *root, char *key, Queue **queue)
+{
+    Queue* q_cursor = *queue;
+    while (root != NULL)
+    {
+        if (strcmp(root->door_name, key) == 0)
+            return root;
+        
+        enqueue(q_cursor, root->left);
+        enqueue(q_cursor, root->right);
+        root = dequeue(q_cursor);
+    }
+    printf("Could not find the key: %s\n", key);
+    return NULL;
+}
+
+/*  TODO:
+    I need to change this to use the insertion method to find the coordinate
+    in a more efficient way. But this is a just in case solution which was easy
+    to port from other search methods.
+*/
+KD_Tree *__search_coordinate(KD_Tree *root, int *key, Queue **queue)
+{
+    Queue* q_cursor = *queue;
+    while (root != NULL)
+    {
+        if ((root->data[0] == key[0]) && (root->data[1] == key[1]))
+            return root;
+        
+        enqueue(q_cursor, root->left);
+        enqueue(q_cursor, root->right);
+        root = dequeue(q_cursor);
+    }
+    printf("Could not find the key: (%d, %d)\n", key[0], key[1]);
+    return NULL;
+}
+
+// Search wrapper
+KD_Tree *search_kdtree(KD_Tree *root, int token, Queue **queue)
+{
+    if (root == NULL)
+    {
+        printf("Tree is empty\n");
+        return NULL;
+    }
+
+    if (!is_empty(*queue))
+        empty_queue(*queue);
+    
+    printf("Enter Search Keyword: ");
+    char key_c;
+    char key_s[S_LEN];
+    int key_d[K_DIM];
+    int check;
+
+    switch (token)
+    {
+    case S_CODE:
+            scanf("%c", &key_c);
+            return __search_index(root, key_c, queue);
+        break;
+    
+    case S_NAME:
+            scanf("%s", &key_s);
+            return __search_name(root, key_s, queue);
+        break;
+    
+    case S_COORD:
+            printf("(use x, y for coordinates) ");
+            check = scanf("%d, %d", &key_d[0], &key_d[1]);
+            if (check != 2)
+            {
+                printf("Unexpected token!");
+                return NULL;
+            }
+            return __search_coordinate(root, key_d, queue);
+        break;
+    
+    default:
+            printf("Unexpected token!\n");
+            return NULL;
+        break;
+    }
+}
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//           QUEUE FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+Queue *create_queue(unsigned capacity)
+{ 
+    Queue* queue = (Queue*) malloc(sizeof(Queue)); 
+    queue->capacity = capacity; 
+    queue->front = queue->size = 0;  
+    queue->rear = capacity - 1;  // This is important, see the enqueue 
+    queue->data = malloc(queue->capacity * sizeof(KD_Tree*));
+    return queue; 
+} 
+
+int is_full(Queue *queue) 
+{
+    return (queue->size == queue->capacity);
+}
+
+int is_empty(Queue *queue)
+{
+    return (queue->size == 0);
+}
+
+void enqueue(Queue *queue, KD_Tree *item)
+{
+    if (is_full(queue))
+        return;
+    if (item != NULL)
+    {
+        queue->rear = (queue->rear + 1) % queue->capacity;
+        queue->data[queue->rear] = item;
+        queue->size = queue->size + 1;
+    }
+}
+
+KD_Tree *dequeue(Queue *queue)
+{
+    if (is_empty(queue)) 
+        return NULL;
+    KD_Tree* item = queue->data[queue->front]; 
+    queue->front = (queue->front + 1) % queue->capacity; 
+    queue->size = queue->size - 1; 
+    return item;
+}
+
+KD_Tree *front(Queue *queue)
+{
+    if (is_empty(queue)) 
+        return NULL; 
+    return queue->data[queue->front]; 
+}
+
+KD_Tree *rear(Queue *queue)
+{
+    if (is_empty(queue)) 
+        return NULL; 
+    return queue->data[queue->rear]; 
+}
+
+void empty_queue(Queue *queue)
+{
+    while (!is_empty(queue))
+        dequeue(queue);    
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
@@ -150,10 +327,23 @@ Tree_Data *read_data(char *filename)
 
     // Discard first line for now
     fgets(line, LINE_MAX, file_pointer);
+    const char s[2] = ", ";
+    char *token;
+
     while (fgets(line, LINE_MAX, file_pointer) != NULL)
     {
-        sscanf(line, "%c, %s, %d, %d", &data_list[i].door_code, data_list[i].door_name, &(data_list[i].data[0]), &(data_list[i].data[1]));
-        i++;
+        
+        token = strtok(line, s);
+        sscanf(token, "%c", &data_list[i].door_code);
+        token = strtok(NULL, s);
+        sscanf(token, "%s", data_list[i].door_name);
+        token = strtok(NULL, s);
+        data_list[i].data[0] = atoi(token);
+        token = strtok(NULL, s);
+        data_list[i].data[1] = atoi(token);
+        
+
+        ++i;
     }
     fclose(file_pointer);
     return data_list;

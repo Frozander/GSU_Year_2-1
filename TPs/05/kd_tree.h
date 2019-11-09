@@ -14,6 +14,10 @@
 #define P_INORDER    1
 #define P_POSTORDER  2
 
+#define S_CODE  0
+#define S_NAME  1
+#define S_COORD 2
+
 typedef struct kd_tree
 {
     char door_code;
@@ -23,6 +27,13 @@ typedef struct kd_tree
     struct kd_tree *left;
     struct kd_tree *right;
 } KD_Tree;
+
+typedef struct queue 
+{ 
+    int front, rear, size; 
+    unsigned capacity; 
+    KD_Tree** data;
+} Queue;
 
 typedef struct tree_data
 {
@@ -40,7 +51,25 @@ KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_arr
 KD_Tree *init_tree(KD_Tree *root, char *filename);
 void __tree_print(KD_Tree *root, int convention);
 void print_tree(KD_Tree *root, int convention);
+void print_node(KD_Tree *root);
 KD_Tree *kill_tree(KD_Tree *root);
+KD_Tree *__search_index(KD_Tree *root, char key, Queue **queue);
+KD_Tree *__search_name(KD_Tree *root, char *key, Queue **queue);
+KD_Tree *__search_coordinate(KD_Tree *root, int *key, Queue **queue);
+KD_Tree *search_kdtree(KD_Tree *root, int token, Queue **queue);
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//           QUEUE FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+Queue *create_queue(unsigned capacity);
+int is_full(Queue *queue);
+int is_empty(Queue *queue);
+void enqueue(Queue *queue, KD_Tree *item);
+KD_Tree *dequeue(Queue *queue);
+KD_Tree *front(Queue *queue);
+KD_Tree *rear(Queue *queue);
+void empty_queue(Queue *queue);
+
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
