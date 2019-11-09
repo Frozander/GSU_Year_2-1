@@ -11,7 +11,9 @@ Queue* main_search_queue = NULL;
 int main(int argc, char const *argv[])
 {
     // TESTING
-    main_root = init_tree(main_root, "data.csv");
+    int data_len = line_counter("data.csv");
+    Tree_Data *data_list = read_data("data.csv");
+    main_root = init_tree(main_root, data_list, data_len);
     main_search_queue = create_queue(512);
 
     print_tree(main_root, P_PREORDER);

@@ -59,17 +59,17 @@ KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_arr
     return root;
 }
 
-KD_Tree *init_tree(KD_Tree *root, char *filename)
+// Reads from a Tree_Data struct and fills the root pointer. Frees data_list afterwards.
+KD_Tree *init_tree(KD_Tree *root, Tree_Data *data_list, int len)
 {
-    unsigned int l_count = line_counter(filename) - 1;
-    Tree_Data *data_list = read_data(filename);
-    for (unsigned int i = 0; i < l_count; i++)
+    for (unsigned int i = 0; i < len; i++)
     {
         // Inserts alphabethically since csv is alphabetically sorted already
         // So needs a sorting algorithm for inserting with different values
         printf("%c)%s - (%d, %d)\n", data_list[i].door_code, data_list[i].door_name, data_list[i].data[0], data_list[i].data[1]);
         root = insert_node(root, data_list[i].door_code, data_list[i].door_name, data_list[i].data);
     }
+    free(data_list);
     return root;
 }
 
@@ -241,6 +241,7 @@ KD_Tree *search_kdtree(KD_Tree *root, int token, Queue **queue)
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //           QUEUE FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
 Queue *create_queue(unsigned capacity)
 { 
     Queue* queue = (Queue*) malloc(sizeof(Queue)); 
@@ -368,4 +369,46 @@ unsigned int line_counter(char *filename)
 
     fclose(file_pointer);
     return l_count;
+}
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         TREE DATA FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+Tree_Data *sort_data(Tree_Data *data_list, SortType type, int len)
+{
+    Tree_Data *new_data;
+    switch (type)
+    {
+    case COORD_X:
+            qsort(new_data, len, sizeof(Tree_Data), __compare_COORDX);
+        break;
+    case COORD_Y:
+            qsort(new_data, len, sizeof(Tree_Data), __compare_COORDY);
+        break;
+    case CODE:
+            qsort(new_data, len, sizeof(Tree_Data), __compare_CODE);
+        break;
+    case NAME:
+            qsort(new_data, len, sizeof(Tree_Data), __compare_NAME);
+        break;
+    default:
+        break;
+    }
+}
+
+int __compare_COORDX(const void * a, const void * b) {
+   return ( ((Tree_Data*)a)->data[0] - ((Tree_Data*)b)->data[0] );
+}
+
+int __compare_COORDY(const void * a, const void * b) {
+   return ( ((Tree_Data*)a)->data[1] - ((Tree_Data*)b)->data[1] );
+}
+
+int __compare_CODE(const void * a, const void * b) {
+   return ( ((Tree_Data*)a)->door_code - ((Tree_Data*)b)->door_code );
+}
+
+int __compare_NAME(const void * a, const void * b) {
+   return ( strcmp(((Tree_Data*)a)->door_name, ((Tree_Data*)b)->door_name) );
 }

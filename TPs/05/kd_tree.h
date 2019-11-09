@@ -48,7 +48,7 @@ typedef struct tree_data
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 KD_Tree *create_node(int arg_count, char new_code, char *new_name, int *data_array);
 KD_Tree *insert_node(KD_Tree *root, char new_code, char *new_name, int *data_array);
-KD_Tree *init_tree(KD_Tree *root, char *filename);
+KD_Tree *init_tree(KD_Tree *root, Tree_Data *data_list, int len);
 void __tree_print(KD_Tree *root, int convention);
 void print_tree(KD_Tree *root, int convention);
 void print_node(KD_Tree *root);
@@ -75,6 +75,25 @@ void empty_queue(Queue *queue);
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 #define LINE_MAX 256
 
-Tree_Data* read_data(char *filename);
+Tree_Data *read_data(char *filename);
 unsigned int line_counter(char *filename);
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         TREE DATA FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+typedef enum sort_type
+{
+    COORD_X,
+    COORD_Y,
+    NAME,
+    CODE
+} SortType;
+
+Tree_Data *sort_data(Tree_Data *data_list, SortType type, int len);
+int __compare_COORDX(const void * a, const void * b);
+int __compare_COORDY(const void * a, const void * b);
+int __compare_CODE(const void * a, const void * b);
+int __compare_NAME(const void * a, const void * b);
+
 #endif
