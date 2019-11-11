@@ -37,8 +37,11 @@ AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, char f
 
 char sanitize_char(char c)
 {
+    if (c >= 'a' && c <= 'z')
+        return c;
     if (c >= 'A' && c <= 'Z')
         return c + 32;
+    else return 'a'; // default return is 'a' since this function expects alphabeth and returns alphabeth
 }
 
 int code_to_index(char code)
