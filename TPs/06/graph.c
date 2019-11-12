@@ -81,3 +81,65 @@ char* error_type(ErrorType error_t)
     }
 }
 
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         FILE STREAM FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+// Unfortunately this function only works for my specific type of csv
+Sensor_Data *read_data(char *filename)
+{
+    unsigned int l_count = line_counter(filename);
+    Sensor_Data *data_list = malloc(sizeof(Sensor_Data) * (l_count - 1));
+
+    FILE *file_pointer;
+    file_pointer = fopen(filename, "r");
+    if (file_pointer == NULL)
+    {
+        printf("Could not open the file %s!", filename);
+        return 0;
+    }
+
+    char line[LINE_MAX];
+    int i = 0;
+
+    // Discard first line for now
+    fgets(line, LINE_MAX, file_pointer);
+    const char s[2] = ", ";
+    char *token;
+
+    while (fgets(line, LINE_MAX, file_pointer) != NULL)
+    {
+        token = strtok(line, s);
+        sscanf(token, "%d", &data_list[i].index);
+        token = strtok(NULL, s);
+        data_list[i].x = atof(token);
+        token = strtok(NULL, s);
+        data_list[i].y = atof(token);
+        token = strtok(NULL, s);
+        data_list[i].z = atof(token);
+        ++i;
+    }
+    fclose(file_pointer);
+    return data_list;
+}
+
+unsigned int line_counter(char *filename)
+{
+    FILE *file_pointer;
+    file_pointer = fopen(filename, "r");
+
+    if (file_pointer == NULL)
+    {
+        printf("Could not open the file %s!", filename);
+        return 0;
+    }
+
+    char c;
+    unsigned int l_count = 0;
+    for (c = getc(file_pointer); c != EOF; c = getc(file_pointer))
+        if (c == '\n')
+            ++l_count;
+
+    fclose(file_pointer);
+    return l_count;
+}

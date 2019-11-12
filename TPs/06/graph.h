@@ -36,4 +36,21 @@ void log_error(char* function_name, ErrorType error_type);
 char* error_type(ErrorType);
 
 
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         FILE STREAM FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+typedef struct __sensor_data
+{
+    int index;
+    float x, y, z;
+} Sensor_Data;
+
+#define LINE_MAX 256
+
+Sensor_Data *read_data(char *filename);
+unsigned int line_counter(char *filename);
+
+
+
 #endif
