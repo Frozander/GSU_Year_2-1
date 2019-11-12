@@ -66,6 +66,22 @@ void add_edge(Graph *graph, int from, int to)
     graph->vertex_array[to].head = new_node;
 }
 
+void print_graph(Graph *graph) 
+{ 
+    int vertex_index; 
+    for (vertex_index = 0; vertex_index < graph->vertices; ++vertex_index) 
+    { 
+        AdjListNode *cursor = graph->vertex_array[vertex_index].head; 
+        printf("\n%d ) ->", vertex_index); 
+        while (cursor != NULL)
+        { 
+            printf("-> %d", cursor->destination); 
+            cursor = cursor->next; 
+        } 
+        printf("\n"); 
+    } 
+} 
+
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         ADJ MATRIX FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
@@ -123,8 +139,6 @@ AdjMatrixNode **create_matrix_from_data(char *filename)
             new_matrix[i][j].distance = is_connected(s_data[i], s_data[j], MAX_DIST);
     
     return new_matrix;
-
-
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
@@ -145,24 +159,16 @@ Sensor_Data *read_data(char *filename)
         return 0;
     }
 
-    char line[LINE_MAX];
+    char line[L_MAX];
     int i = 0;
 
     // Discard first line for now
-    fgets(line, LINE_MAX, file_pointer);
-    const char s[2] = ", ";
-    char *token;
+    fgets(line, L_MAX, file_pointer);
 
-    while (fgets(line, LINE_MAX, file_pointer) != NULL)
+    while (fgets(line, L_MAX, file_pointer) != NULL)
     {
-        token = strtok(line, s);
-        sscanf(token, "%d", &data_list[i].index);
-        token = strtok(NULL, s);
-        data_list[i].x = atof(token);
-        token = strtok(NULL, s);
-        data_list[i].y = atof(token);
-        token = strtok(NULL, s);
-        data_list[i].z = atof(token);
+        //printf("%s\n", line);
+        sscanf(line, "%d,%f,%f,%f\n", &data_list[i].index, &data_list[i].x, &data_list[i].y, &data_list[i].z);
         ++i;
     }
     fclose(file_pointer);
