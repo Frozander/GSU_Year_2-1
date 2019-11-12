@@ -66,19 +66,44 @@ void add_edge(Graph *graph, int from, int to)
     graph->vertex_array[to].head = new_node;
 }
 
-void log_error(char* function_name, ErrorType error_t)
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//         ADJ MATRIX FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+AdjMatrixNode **create_adj_matrix(int node_count)
 {
-    fprintf(stderr, "ERROR: %s at function '%s' at line %d in file %s\n", error_type(error_t), function_name, __LINE__, __FILE__);
+    AdjMatrixNode **new_matrix = malloc(sizeof(AdjMatrixNode*) * node_count);
+    for (int i = 0; i < node_count; i++)
+    {
+        new_matrix[i] = malloc(sizeof(AdjMatrixNode) * node_count);
+        for (int j = 0; j < node_count; j++)
+        {
+            new_matrix[i][j].connection = NO_CONNECTION;
+            new_matrix[i][j].distance = INFINITY;
+        }
+    }
+    return new_matrix;
 }
 
-char* error_type(ErrorType error_t)
+AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to)
 {
-    switch (error_t)
+
+    if (from > node_count || to > node_count)
     {
-    case MALLOC_ERR:     return "MALLOC ERROR";
-    case NULL_OBJECT:    return "NULL OBJECT ERROR";
-    default:             return "UNKNOWN ERROR";
+        printf("Node does not exist");
+        return matrix;
     }
+    matrix[from][to].connection = CONNECTION;
+}
+
+AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, int from, int to)
+{
+    if (from > node_count || to > node_count)
+    {
+        printf("Node does not exist");
+        return matrix;
+    }
+    matrix[from][to].connection = NO_CONNECTION;
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
@@ -142,4 +167,24 @@ unsigned int line_counter(char *filename)
 
     fclose(file_pointer);
     return l_count;
+}
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//       ERROR LOGGING FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+void log_error(char* function_name, ErrorType error_t)
+{
+    fprintf(stderr, "ERROR: %s at function '%s' at line %d in file %s\n",
+            error_type(error_t), function_name, __LINE__, __FILE__);
+}
+
+char* error_type(ErrorType error_t)
+{
+    switch (error_t)
+    {
+    case MALLOC_ERR:     return "MALLOC ERROR";
+    case NULL_OBJECT:    return "NULL OBJECT ERROR";
+    default:             return "UNKNOWN ERROR";
+    }
 }
