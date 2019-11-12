@@ -1,55 +1,83 @@
 #include "graph.h"
 
-
-AdjMatrixNode **create_adj_matrix(int node_count)
+AdjListNode *new_adj_list_node(int destination)
 {
-    AdjMatrixNode **new_matrix = malloc(sizeof(AdjMatrixNode*) * node_count);
-    for (int i = 0; i < node_count; i++)
+    AdjListNode *new_node = malloc(sizeof(AdjListNode));
+    if (new_node == NULL)
     {
-        new_matrix[i] = malloc(sizeof(AdjMatrixNode) * node_count);
-        for (int j = 0; j < node_count; j++)
-        {
-            new_matrix[i][j].connection = NO_CONNECTION;
-            new_matrix[i][j].distance = INFINITY;
-        }
+        log_error("new_adj_list_node()", MALLOC_ERR);
+        return NULL;
     }
-    return new_matrix;
+    new_node->destination = destination;
+    new_node->next = NULL;
+    return new_node;
 }
 
-AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, char from, char to)
+Graph *create_graph(int vertices)
 {
-    int d_from = code_to_index(sanitize_char(from));
-    int d_to   = code_to_index(sanitize_char(to));
-
-    if (d_from > node_count || d_to > node_count)
+    Graph *new_graph = malloc(sizeof(Graph));
+    if (new_graph == NULL)
     {
-        printf("Node does not exist");
-        return matrix;
+        log_error("create_graph()", MALLOC_ERR);
+        return NULL;
     }
-    matrix[d_from][d_to].connection = CONNECTION;
+
+    new_graph->vertices = vertices;
+
+    new_graph->vertex_array = malloc(sizeof(AdjList) * vertices);
+    if (new_graph->vertex_array == NULL)
+    {
+        log_error("create_graph()", MALLOC_ERR);
+        return NULL;
+    }
+
+    for (int i = 0; i < vertices; ++i) // ++i because of performance gain
+        new_graph->vertex_array[i].head = NULL;
+
+    return new_graph;   
 }
 
-AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, char from, char to)
+void add_edge(Graph *graph, int from, int to)
 {
-    
+    if (graph == NULL)
+    {
+        log_error("add_edge()", NULL_OBJECT);
+        return;
+    }
+
+    AdjListNode *new_node = new_adj_list_node(to);
+    if (new_node == NULL)
+    {
+        log_error("add_edge()", NULL_OBJECT);
+        return;
+    }
+
+    new_node->next = graph->vertex_array[from].head; // Add linked list at 'from' to new_node
+    graph->vertex_array[from].head = new_node;       // Then change linked list at 'from' to new_node's linked list
+
+    // Do the same for backwards
+    new_node = new_adj_list_node(from);
+    if (new_node == NULL)
+    {
+        log_error("add_edge()", NULL_OBJECT);
+        return;
+    }
+    new_node->next = graph->vertex_array[to].head;
+    graph->vertex_array[to].head = new_node;
 }
 
-
-char sanitize_char(char c)
+void log_error(char* function_name, ErrorType error_t)
 {
-    if (c >= 'a' && c <= 'z')
-        return c;
-    if (c >= 'A' && c <= 'Z')
-        return c + 32;
-    else return 'a'; // default return is 'a' since this function expects alphabeth and returns alphabeth
+    fprintf(stderr, "ERROR: %s at function '%s' at line %d in file %s\n", error_type(error_t), function_name, __LINE__, __FILE__);
 }
 
-int code_to_index(char code)
+char* error_type(ErrorType error_t)
 {
-    return (int) code - 97;
+    switch (error_t)
+    {
+    case MALLOC_ERR:     return "MALLOC ERROR";
+    case NULL_OBJECT:    return "NULL OBJECT ERROR";
+    default:             return "UNKNOWN ERROR";
+    }
 }
 
-char index_to_code(int index)
-{
-    return (char) index + 97;
-}

@@ -5,31 +5,35 @@
 #include <stdio.h>
 #include <limits.h>
 
-#define START 0
-#define TARGET -1
-#define NO_CONNECTION 0
-#define CONNECTION 1
-#define INFINITY INT_MAX
-
-typedef struct __adj_matrix_node
+typedef enum __error_types
 {
-    int connection;
-    int distance;
-} AdjMatrixNode;
+    MALLOC_ERR,
+    NULL_OBJECT
+} ErrorType;
 
-typedef enum __status_control
+typedef struct __adj_list_node 
+{ 
+    int destination; 
+    struct __adj_list_node *next; 
+} AdjListNode;
+
+typedef struct __adj_list 
+{ 
+    AdjListNode *head;  
+} AdjList;
+
+typedef struct __graph
 {
-    SUCCESS,
-    FAILURE
-} StatusControl;
+    int vertices;
+    AdjList *vertex_array;
+} Graph;
 
-AdjMatrixNode **create_adj_matrix(int node_count);
-AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, char from, char to);
-AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, char from, char to);
+AdjListNode *new_adj_list_node(int destination);
+Graph *create_graph(int vertices);
+void add_edge(Graph *graph, int from, int to);
 
-char sanitize_char(char c);
-int code_to_index(char code);
-char index_to_code(int index);
+void log_error(char* function_name, ErrorType error_type);
+char* error_type(ErrorType);
 
 
 #endif
