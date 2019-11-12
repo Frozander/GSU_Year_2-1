@@ -32,8 +32,10 @@ Graph *create_graph(int vertices)
     }
 
     for (int i = 0; i < vertices; ++i) // ++i because of performance gain
+    {
         new_graph->vertex_array[i].head = NULL;
-
+        new_graph->vertex_array[i].adj_count = 0;
+    }
     return new_graph;   
 }
 
@@ -54,6 +56,7 @@ void add_edge(Graph *graph, int from, int to)
 
     new_node->next = graph->vertex_array[from].head; // Add linked list at 'from' to new_node
     graph->vertex_array[from].head = new_node;       // Then change linked list at 'from' to new_node's linked list
+    graph->vertex_array[from].adj_count++;
 
     // Do the same for backwards
     new_node = new_adj_list_node(from);
@@ -64,6 +67,8 @@ void add_edge(Graph *graph, int from, int to)
     }
     new_node->next = graph->vertex_array[to].head;
     graph->vertex_array[to].head = new_node;
+    graph->vertex_array[to].adj_count++;
+
 }
 
 void print_graph(Graph *graph) 
@@ -75,12 +80,23 @@ void print_graph(Graph *graph)
         printf("\n%d ) ->", vertex_index); 
         while (cursor != NULL)
         { 
-            printf("-> %d", cursor->destination); 
+            printf("%d ->", cursor->destination); 
             cursor = cursor->next; 
         } 
         printf("\n"); 
     } 
-} 
+}
+
+Graph *matrix_to_graph(AdjMatrixNode **matrix, int node_count)
+{
+    Graph *new_graph = create_graph(node_count);
+    for (size_t i = 0; i < node_count; ++i)
+        for (size_t j = i; j < node_count; ++j)
+            if (matrix[i][j].distance > 0)
+                add_edge(new_graph, i, j);            
+    return new_graph;    
+}
+
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         ADJ MATRIX FUNCTIONS

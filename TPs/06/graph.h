@@ -17,7 +17,8 @@ typedef struct __adj_list_node
 
 typedef struct __adj_list 
 { 
-    AdjListNode *head;  
+    AdjListNode *head;
+    int adj_count; 
 } AdjList;
 
 typedef struct __graph
@@ -26,10 +27,22 @@ typedef struct __graph
     AdjList *vertex_array;
 } Graph;
 
+typedef struct __adj_matrix_node
+{
+    float distance;
+} AdjMatrixNode;
+
+typedef struct __sensor_data
+{
+    int index;
+    float x, y, z;
+} Sensor_Data;
+
 AdjListNode *new_adj_list_node(int destination);
 Graph *create_graph(int vertices);
 void add_edge(Graph *graph, int from, int to);
-
+void print_graph(Graph *graph);
+Graph *matrix_to_graph(AdjMatrixNode **matrix, int node_count);
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         ADJ MATRIX FUNCTIONS
@@ -38,26 +51,14 @@ void add_edge(Graph *graph, int from, int to);
 #define NO_CONNECTION 0
 #define CONNECTION 1
 
-typedef struct __adj_matrix_node
-{
-    float distance;
-} AdjMatrixNode;
-
 AdjMatrixNode **create_adj_matrix(int node_count);
 AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to, float distance);
 AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, int from, int to);
 AdjMatrixNode **create_matrix_from_data(char *filename);
-void print_graph(Graph *graph);
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         FILE STREAM FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
-
-typedef struct __sensor_data
-{
-    int index;
-    float x, y, z;
-} Sensor_Data;
 
 #define L_MAX 256
 
