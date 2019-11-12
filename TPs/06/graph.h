@@ -3,13 +3,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 #include <limits.h>
 
-typedef enum __error_types
-{
-    MALLOC_ERR,
-    NULL_OBJECT
-} ErrorType;
+#define MAX_DIST 30
 
 typedef struct __adj_list_node 
 { 
@@ -32,27 +29,22 @@ AdjListNode *new_adj_list_node(int destination);
 Graph *create_graph(int vertices);
 void add_edge(Graph *graph, int from, int to);
 
-void log_error(char* function_name, ErrorType error_type);
-char* error_type(ErrorType);
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //         ADJ MATRIX FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
-#define START 0
-#define TARGET -1
 #define NO_CONNECTION 0
 #define CONNECTION 1
 #define INFINITY INT_MAX
 
 typedef struct __adj_matrix_node
 {
-    int connection;
-    int distance;
+    float distance;
 } AdjMatrixNode;
 
 AdjMatrixNode **create_adj_matrix(int node_count);
-AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to);
+AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to, float distance);
 AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, int from, int to);
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
@@ -70,6 +62,25 @@ typedef struct __sensor_data
 Sensor_Data *read_data(char *filename);
 unsigned int line_counter(char *filename);
 
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//       SENSOR DATA FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
+float get_distance(Sensor_Data point1, Sensor_Data point2);
+float is_connected(Sensor_Data point1, Sensor_Data point2, float max);
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//       ERROR LOGGING FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+typedef enum __error_types
+{
+    MALLOC_ERR,
+    NULL_OBJECT_ERR,
+    FILE_READ_ERR
+} ErrorType;
+
+void log_error(char* function_name, ErrorType error_type);
+char* error_type(ErrorType);
 
 #endif

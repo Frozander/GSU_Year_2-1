@@ -41,14 +41,14 @@ void add_edge(Graph *graph, int from, int to)
 {
     if (graph == NULL)
     {
-        log_error("add_edge()", NULL_OBJECT);
+        log_error("add_edge()", NULL_OBJECT_ERR);
         return;
     }
 
     AdjListNode *new_node = new_adj_list_node(to);
     if (new_node == NULL)
     {
-        log_error("add_edge()", NULL_OBJECT);
+        log_error("add_edge()", NULL_OBJECT_ERR);
         return;
     }
 
@@ -59,7 +59,7 @@ void add_edge(Graph *graph, int from, int to)
     new_node = new_adj_list_node(from);
     if (new_node == NULL)
     {
-        log_error("add_edge()", NULL_OBJECT);
+        log_error("add_edge()", NULL_OBJECT_ERR);
         return;
     }
     new_node->next = graph->vertex_array[to].head;
@@ -78,22 +78,20 @@ AdjMatrixNode **create_adj_matrix(int node_count)
         new_matrix[i] = malloc(sizeof(AdjMatrixNode) * node_count);
         for (int j = 0; j < node_count; j++)
         {
-            new_matrix[i][j].connection = NO_CONNECTION;
-            new_matrix[i][j].distance = INFINITY;
+            new_matrix[i][j].distance = NO_CONNECTION;
         }
     }
     return new_matrix;
 }
 
-AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to)
+AdjMatrixNode **add_connection(AdjMatrixNode **matrix, int node_count, int from, int to, float distance)
 {
-
     if (from > node_count || to > node_count)
     {
         printf("Node does not exist");
         return matrix;
     }
-    matrix[from][to].connection = CONNECTION;
+    matrix[from][to].distance = distance;
 }
 
 AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, int from, int to)
@@ -103,7 +101,30 @@ AdjMatrixNode **remove_connection(AdjMatrixNode **matrix, int node_count, int fr
         printf("Node does not exist");
         return matrix;
     }
-    matrix[from][to].connection = NO_CONNECTION;
+    matrix[from][to].distance = NO_CONNECTION;
+}
+
+AdjMatrixNode **create_matrix_from_data(char *filename)
+{
+    int node_count = line_counter(filename) - 1/* First line of the csv */;
+    Sensor_Data *s_data = read_data(filename);
+
+    if (s_data == NULL)
+    {
+        log_error("create_matrix_from_data()", NULL_OBJECT_ERR);
+        return NULL;
+    }
+
+    AdjMatrixNode **new_matrix = create_adj_matrix(node_count);
+    float distance;
+
+    for (size_t i = 0; i < node_count; ++i)
+        for (size_t j = 0; j < node_count; ++j)
+            new_matrix[i][j].distance = is_connected(s_data[i], s_data[j], MAX_DIST);
+    
+    return new_matrix;
+
+
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
@@ -170,6 +191,24 @@ unsigned int line_counter(char *filename)
 }
 
 //◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
+//       SENSOR DATA FUNCTIONS
+//◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
+
+float get_distance(Sensor_Data point1, Sensor_Data point2)
+{
+    return sqrtf(powf(point1.x - point2.x, 2) + powf(point1.y - point2.y, 2) + powf(point1.z - point2.z, 2));
+}
+
+float is_connected(Sensor_Data point1, Sensor_Data point2, float max)
+{
+    int distance = get_distance(point1, point2);
+    if (distance <= max)
+        return distance;
+    else
+        return 0;
+}
+
+//◤━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◥
 //       ERROR LOGGING FUNCTIONS
 //◣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◢
 
@@ -183,8 +222,9 @@ char* error_type(ErrorType error_t)
 {
     switch (error_t)
     {
-    case MALLOC_ERR:     return "MALLOC ERROR";
-    case NULL_OBJECT:    return "NULL OBJECT ERROR";
-    default:             return "UNKNOWN ERROR";
+    case MALLOC_ERR:         return "MALLOC ERROR";
+    case NULL_OBJECT_ERR:    return "NULL OBJECT ERROR";
+    case FILE_READ_ERR:      return "FILE READ ERROR";
+    default:                 return "UNKNOWN ERROR";
     }
 }
