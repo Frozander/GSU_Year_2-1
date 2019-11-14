@@ -18,6 +18,9 @@
 *.exe
 *.obj
 
+#ignore 'test' dir
+test/
+
 # Ignore `bin` dir
 bin/
 # or
