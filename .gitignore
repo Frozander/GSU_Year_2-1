@@ -19,7 +19,7 @@
 *.obj
 
 #ignore 'test' dir
-test/
+test/*
 
 # Ignore `bin` dir
 bin/
