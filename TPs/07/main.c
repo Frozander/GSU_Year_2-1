@@ -20,17 +20,19 @@ int main(int argc, char const *argv[])
     {.name = "selection_sort"   , .fptr = selection_sort},
     {.name = "insertion_sort"   , .fptr = insertion_sort},
     {.name = "quick_sort"       , .fptr = qsort_wrapper},
-    {.name = "shell_sort"       , .fptr = shell_sort},
     {.name = "merge_sort"       , .fptr = mergesort_wrapper},
-    {.name = "bucket_sort"      , .fptr = bucket_sort}
+    {.name = "bucket_sort"      , .fptr = bucket_sort},
+    {.name = "shell_sort"       , .fptr = shell_sort}
     };
 
     int n = 7;
 
     for (int i = 0; i < n; ++i)
-    benchmark(all_methods[i], 1);
-    
+    benchmark(&all_methods[i], 1);
 
+    printf("\n Calculating best for each category...\n\n");
+
+    find_best_performance(all_methods, 9, 7);
 
     return 0;
 }

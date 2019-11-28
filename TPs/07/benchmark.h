@@ -12,11 +12,10 @@ typedef struct {
   /* Algoritmanin adi, ornek: "Insertion Sort" */
   char *name;
   /* Algoritmanin siralama hizi (max 16) */
-  double perf[16];
+  double perf[9];
   /* Algoritmayi gercekleyen fonksiyonu gosterecek pointer */
   void (*fptr) (int *, int);
   /* Performansi olculsun mu? */
-  int dont_benchmark;
 } SortMethod;
 
 extern int *fill_array(int);
@@ -32,8 +31,8 @@ extern void insertion_sort(int *, int);
 
 int arrays_equal(int *sorted, int *answer, int size);
 void print_array(int *array, int size);
-void benchmark(SortMethod s, int verbose);
-
-
+void benchmark(SortMethod *s, int verbose);
+SortMethod *compare_times(SortMethod *methodlist, int method_count, int test_num);
+void find_best_performance(SortMethod *methodlist, int test_count, int method_count);
 
 #endif

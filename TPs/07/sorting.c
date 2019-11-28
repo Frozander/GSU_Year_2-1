@@ -134,7 +134,7 @@ void quick_sort(int *array, int low, int high)
 
 void qsort_wrapper(int *array, int n)
 {
-    quick_sort(array, 0, n);
+    quick_sort(array, 0, n - 1);
 }
 
 void merge(int *array, int low, int middle, int high) {
@@ -185,30 +185,30 @@ void merge(int *array, int low, int middle, int high) {
 }
 
 void merge_sort(int *array, int low, int high) {
-  if (low < high) {
-    int middle = low + (high - low)/2;
-    merge_sort(array, low, middle);
-    merge_sort(array, middle + 1, high);
-    merge(array, low, middle, high);
-  }
+    if (low < high) {
+        int middle = low + (high - low)/2;
+        merge_sort(array, low, middle);
+        merge_sort(array, middle + 1, high);
+        merge(array, low, middle, high);
+    }
 }
 
 void mergesort_wrapper(int *array, int n)
 {
-    merge_sort(array, 0, n);
+    merge_sort(array, 0, n - 1);
 }
 
 void shell_sort(int *array, int n) {
-  int gaps[] = {4193, 1073, 281, 77, 23, 8, 1};
+  int gaps[] = {701, 301, 132, 57, 23, 10, 4, 1};
   int i, j, k, gapsize, temp;
 
-  for(i = 0; i < 7; ++i)
+  for(i = 0; i < 8; ++i)
   {
     gapsize = gaps[i];
-    for(j = gapsize; j < n; ++i)
+
+    for(j = gapsize; j < n; ++j)
     {
        temp = array[j];
-
        k = j;
        while(k >= gapsize && array[k - gapsize] > temp){
          array[k] = array[k -gapsize];
@@ -216,6 +216,7 @@ void shell_sort(int *array, int n) {
        }
        array[k] = temp;
     }
+    
   }
 }
 
