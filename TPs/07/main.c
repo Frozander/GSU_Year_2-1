@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     int n = 7;
 
     for (int i = 0; i < n; ++i)
-    benchmark(&all_methods[i], 1);
+        benchmark(&all_methods[i], 1);
 
     printf("\n Calculating best for each category...\n\n");
 
