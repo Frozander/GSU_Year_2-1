@@ -1,6 +1,6 @@
 #include "sorting.h"
 
-void swap(int *x, int *y)  
+void swap(int *x, int *y)
 {
     int tmp = *x;
     *x = *y;
@@ -14,7 +14,7 @@ int *fill_array(int n)
     int *array = malloc(sizeof(int) * n);
     for (i = 0; i < n; ++i)
         array[i] = i;
-    
+
     // Shuffle
     for (i = n - 1; i > 1; --i)
     {
@@ -23,7 +23,7 @@ int *fill_array(int n)
         array[i] = array[j];
         array[j] = tmp;
     }
-    
+
     return array;
 }
 
@@ -55,11 +55,11 @@ void bubble_sort(int *array, int n)
         for (j = 0; j < n - i - 1; ++j)
             if (array[j] > array[j + 1])
             {
-                swap(&array[j], &array[j + 1]);           
+                swap(&array[j], &array[j + 1]);
                 swapped = 1;
             }
         if (!swapped)
-            break;        
+            break;
     }
 }
 
@@ -139,49 +139,49 @@ void qsort_wrapper(int *array, int n)
 
 void merge(int *array, int low, int middle, int high) {
 
-  int i, counter_left, counter_right, k;
-  int left_size = middle - low + 1;
-  int right_size = high - middle;
+    int i, counter_left, counter_right, k;
+    int left_size = middle - low + 1;
+    int right_size = high - middle;
 
-  int* tempArrLeft = malloc(sizeof(int) * left_size);
-  int* tempArrRight = malloc(sizeof(int) * right_size);
+    int* tempArrLeft = malloc(sizeof(int) * left_size);
+    int* tempArrRight = malloc(sizeof(int) * right_size);
 
-  for(i = 0; i < left_size; ++i)
-  {
+    for(i = 0; i < left_size; ++i)
+    {
     tempArrLeft[i] = array[low + i];
-  }
+    }
 
-  for(i = 0; i < right_size; ++i)
-  {
+    for(i = 0; i < right_size; ++i)
+    {
     tempArrRight[i] = array[middle + 1 + i];
-  }
-  counter_left = 0;
-  counter_right = 0;
-  k = low;
+    }
+    counter_left = 0;
+    counter_right = 0;
+    k = low;
 
-  while((counter_left < left_size) && (counter_right < right_size)){
+    while((counter_left < left_size) && (counter_right < right_size)){
 
     if (tempArrLeft[counter_left] < tempArrRight[counter_right]) {
-      array[k] = tempArrLeft[counter_left];
-      ++counter_left;
+        array[k] = tempArrLeft[counter_left];
+        ++counter_left;
     } else
     {
-      array[k] = tempArrRight[counter_right];
-      ++counter_right;
+        array[k] = tempArrRight[counter_right];
+        ++counter_right;
     }
-    
-    ++k;    
-  }
-  while(counter_left < left_size){
+
+    ++k;
+    }
+    while(counter_left < left_size){
     array[k] = tempArrLeft[counter_left];
     ++counter_left;
     ++k;
-  }
-  while(counter_right < right_size){
+    }
+    while(counter_right < right_size){
     array[k] = tempArrRight[counter_right];
     ++counter_right;
     ++k;
-  }
+    }
 }
 
 void merge_sort(int *array, int low, int high) {
@@ -216,7 +216,7 @@ void shell_sort(int *array, int n) {
        }
        array[k] = temp;
     }
-    
+
   }
 }
 

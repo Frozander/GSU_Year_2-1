@@ -33,7 +33,7 @@ double time_it(SortMethod sort, char *type, int *array, int *sorted, int n, int 
     gettimeofday(&start, NULL);
     (*sort.fptr)(array, n);
     gettimeofday(&stop, NULL);
-    
+
     elapsed = (double) (stop.tv_sec - start.tv_sec) * 1000.0f + (stop.tv_usec - start.tv_usec) / 1000.0f;;
     assert(arrays_equal(sorted, array, n));
     if (verbose != 0) printf("%d %s elements: %.3lf ms\n",n, type, elapsed);
