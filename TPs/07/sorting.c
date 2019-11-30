@@ -145,14 +145,11 @@ void merge(int *array, int low, int middle, int high) {
     int* tempArrRight = malloc(sizeof(int) * right_size);
 
     for(i = 0; i < left_size; ++i)
-    {
-    tempArrLeft[i] = array[low + i];
-    }
+        tempArrLeft[i] = array[low + i];
 
     for(i = 0; i < right_size; ++i)
-    {
-    tempArrRight[i] = array[middle + 1 + i];
-    }
+        tempArrRight[i] = array[middle + 1 + i];
+
     counter_left = 0;
     counter_right = 0;
     k = low;
@@ -171,14 +168,14 @@ void merge(int *array, int low, int middle, int high) {
     ++k;
     }
     while(counter_left < left_size){
-    array[k] = tempArrLeft[counter_left];
-    ++counter_left;
-    ++k;
+        array[k] = tempArrLeft[counter_left];
+        ++counter_left;
+        ++k;
     }
     while(counter_right < right_size){
-    array[k] = tempArrRight[counter_right];
-    ++counter_right;
-    ++k;
+        array[k] = tempArrRight[counter_right];
+        ++counter_right;
+        ++k;
     }
 }
 
