@@ -19,9 +19,7 @@ int *fill_array(int n)
     for (i = n - 1; i > 1; --i)
     {
         j = rand() % (i + 1);
-        tmp = array[i];
-        array[i] = array[j];
-        array[j] = tmp;
+        swap(&array[i], &array[j]);
     }
 
     return array;
