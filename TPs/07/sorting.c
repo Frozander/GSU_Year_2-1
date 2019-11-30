@@ -197,34 +197,34 @@ void mergesort_wrapper(int *array, int n)
 }
 
 void shell_sort(int *array, int n) {
-  int gaps[] = {701, 301, 132, 57, 23, 10, 4, 1};
-  int i, j, k, gapsize, temp;
+    int gaps[] = {701, 301, 132, 57, 23, 10, 4, 1};
+    int i, j, k, gapsize, temp;
 
-  for(i = 0; i < 8; ++i)
-  {
+    for(i = 0; i < 8; ++i)
+    {
     gapsize = gaps[i];
 
     for(j = gapsize; j < n; ++j)
     {
-       temp = array[j];
-       k = j;
-       while(k >= gapsize && array[k - gapsize] > temp){
-         array[k] = array[k -gapsize];
-         k -= gapsize;
-       }
-       array[k] = temp;
+        temp = array[j];
+        k = j;
+        while(k >= gapsize && array[k - gapsize] > temp){
+            array[k] = array[k -gapsize];
+            k -= gapsize;
+        }
+        array[k] = temp;
     }
 
-  }
+    }
 }
 
 int find_max(int *array, int n)
 {
-  int max = array[0];
-  for (int i = 1; i < n; ++i)
+    int max = array[0];
+    for (int i = 1; i < n; ++i)
     if (array[i] > max)
-      max = array[i];
-  return max;
+        max = array[i];
+    return max;
 }
 
 void bucket_sort(int *array, int n)
