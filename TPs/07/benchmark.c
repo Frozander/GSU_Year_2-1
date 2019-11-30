@@ -45,52 +45,69 @@ void benchmark(SortMethod *s, int verbose)
     int *arr_test_100 = fill_array_ordered(100);
     int *arr_test_1000 = fill_array_ordered(1000);
     int *arr_test_10000 = fill_array_ordered(10000);
+    int *arr_test_100000 = fill_array_ordered(100000);
 
     int *arr_100_rand  = fill_array(100);
     int *arr_1000_rand  = fill_array(1000);
     int *arr_10000_rand = fill_array(10000);
+    int *arr_100000_rand = fill_array(100000);
 
     int *arr_100_reversed  = fill_array_reversed(100);
     int *arr_1000_reversed  = fill_array_reversed(1000);
     int *arr_10000_reversed = fill_array_reversed(10000);
+    int *arr_100000_reversed = fill_array_reversed(100000);
 
     int *arr_100_ordered  = fill_array_ordered(100);
     int *arr_1000_ordered  = fill_array_ordered(1000);
     int *arr_10000_ordered = fill_array_ordered(10000);
+    int *arr_100000_ordered = fill_array_ordered(100000);
 
     printf("\nBenchmarking %s:\n\n", s->name);
 
     /* Random Array */
-    s->perf[0] = time_it(*s, "random", arr_100_rand, arr_test_100, 100, verbose);
-    s->perf[1] =time_it(*s, "random", arr_1000_rand, arr_test_1000, 1000, verbose);
-    s->perf[2] =time_it(*s, "random", arr_10000_rand, arr_test_10000, 10000, verbose);
-    printf("\n");
-
-    /* Inverted Order Array */
-    s->perf[3] = time_it(*s, "inverted", arr_100_reversed, arr_test_100, 100, verbose);
-    s->perf[4] = time_it(*s, "inverted", arr_1000_reversed, arr_test_1000, 1000, verbose);
-    s->perf[5] = time_it(*s, "inverted", arr_10000_rand, arr_test_10000, 10000, verbose);
-    printf("\n");
-
-    /* Ordered Array */
-    s->perf[6] = time_it(*s, "ordered", arr_100_rand, arr_test_100, 100, verbose);
-    s->perf[7] = time_it(*s, "ordered", arr_1000_rand, arr_test_1000, 1000, verbose);
-    s->perf[8] = time_it(*s, "ordered", arr_10000_rand, arr_test_10000, 10000, verbose);
-    printf("\n");
-
-    /* Free arrays */
-    free(arr_test_100);
-    free(arr_test_1000);
-    free(arr_test_10000);
+    {
+        s->perf[0] = time_it(*s, "random", arr_100_rand, arr_test_100, 100, verbose);
+        s->perf[1] = time_it(*s, "random", arr_1000_rand, arr_test_1000, 1000, verbose);
+        s->perf[2] = time_it(*s, "random", arr_10000_rand, arr_test_10000, 10000, verbose);
+        s->perf[3] = time_it(*s, "random", arr_100000_rand, arr_test_100000, 100000, verbose);
+        printf("\n");
+    }
     free(arr_100_rand);
     free(arr_1000_rand) ;
     free(arr_10000_rand);
+    free(arr_100000_rand);
+
+    /* Inverted Order Array */
+    {
+        s->perf[4] = time_it(*s, "inverted", arr_100_reversed, arr_test_100, 100, verbose);
+        s->perf[5] = time_it(*s, "inverted", arr_1000_reversed, arr_test_1000, 1000, verbose);
+        s->perf[6] = time_it(*s, "inverted", arr_10000_reversed, arr_test_10000, 10000, verbose);
+        s->perf[7] = time_it(*s, "inverted", arr_100000_reversed, arr_test_100000, 100000, verbose);
+        printf("\n");
+    }
     free(arr_100_reversed) ;
     free(arr_1000_reversed) ;
     free(arr_10000_reversed);
+    free(arr_100000_reversed);
+
+    /* Ordered Array */
+    {
+        s->perf[8] = time_it(*s, "ordered", arr_100_ordered, arr_test_100, 100, verbose);
+        s->perf[9] = time_it(*s, "ordered", arr_1000_ordered, arr_test_1000, 1000, verbose);
+        s->perf[10] = time_it(*s, "ordered", arr_10000_ordered, arr_test_10000, 10000, verbose);
+        s->perf[11] = time_it(*s, "ordered", arr_100000_ordered, arr_test_100000, 100000, verbose);
+        printf("\n");
+    }
     free(arr_100_ordered);
     free(arr_1000_ordered);
     free(arr_10000_ordered);
+    free(arr_100000_ordered);
+
+    /* Free test arrays */
+    free(arr_test_100);
+    free(arr_test_1000);
+    free(arr_test_10000);
+    free(arr_test_100000);
 }
 
 SortMethod *compare_times(SortMethod *methodlist, int method_count, int test_num)
@@ -108,7 +125,7 @@ SortMethod *compare_times(SortMethod *methodlist, int method_count, int test_num
 
 void find_best_performance(SortMethod *methodlist, int test_count, int method_count)
 {
-    SortMethod *bests[9];
+    SortMethod *bests[12];
     for (int i = 0; i < test_count; ++i)
     {
         bests[i] = compare_times(methodlist, method_count, i);
@@ -117,12 +134,15 @@ void find_best_performance(SortMethod *methodlist, int test_count, int method_co
     printf("Fastest for 100 randomised: %s\n", bests[0]->name);
     printf("Fastest for 1000 randomised: %s\n", bests[1]->name);
     printf("Fastest for 10000 randomised: %s\n", bests[2]->name);
+    printf("Fastest for 100000 randomised: %s\n", bests[3]->name);
     printf("\n");
-    printf("Fastest for 100 reversed: %s\n", bests[3]->name);
-    printf("Fastest for 1000 reversed: %s\n", bests[4]->name);
-    printf("Fastest for 10000 reversed: %s\n", bests[5]->name);
+    printf("Fastest for 100 reversed: %s\n", bests[4]->name);
+    printf("Fastest for 1000 reversed: %s\n", bests[5]->name);
+    printf("Fastest for 10000 reversed: %s\n", bests[6]->name);
+    printf("Fastest for 100000 reversed: %s\n", bests[7]->name);
     printf("\n");
-    printf("Fastest for 100 ordered: %s\n", bests[6]->name);
-    printf("Fastest for 1000 ordered: %s\n", bests[7]->name);
-    printf("Fastest for 10000 ordered: %s\n", bests[8]->name);
+    printf("Fastest for 100 ordered: %s\n", bests[8]->name);
+    printf("Fastest for 1000 ordered: %s\n", bests[9]->name);
+    printf("Fastest for 10000 ordered: %s\n", bests[10]->name);
+    printf("Fastest for 100000 ordered: %s\n", bests[11]->name);
 }

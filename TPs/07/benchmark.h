@@ -12,7 +12,7 @@ typedef struct {
   /* Algoritmanin adi, ornek: "Insertion Sort" */
   char *name;
   /* Algoritmanin siralama hizi (max 16) */
-  double perf[9];
+  double perf[12];
   /* Algoritmayi gercekleyen fonksiyonu gosterecek pointer */
   void (*fptr) (int *, int);
   /* Performansi olculsun mu? */

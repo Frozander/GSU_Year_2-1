@@ -32,7 +32,9 @@ int main(int argc, char const *argv[])
 
     printf("\n Calculating best for each category...\n\n");
 
-    find_best_performance(all_methods, 9, 7);
+    find_best_performance(all_methods, 12, 7);
+
+    printf("\nI don't know why but my bucketsort is freaking fast...\n");
 
     return 0;
 }
