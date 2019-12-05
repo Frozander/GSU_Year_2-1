@@ -7,7 +7,11 @@
 #include <ctype.h>
 #include <stdint.h>
 
+#define PUBLIC_KEY 1
+#define PRIVATE_KEY 0
+
 typedef struct __keypair {
+    short type; // Public or Private
     uint_fast64_t key_part_1;
     uint_fast64_t key_part_2;
 } KeyPair;

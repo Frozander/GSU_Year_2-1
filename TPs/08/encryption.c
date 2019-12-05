@@ -169,8 +169,8 @@ int is_prime(uint_fast64_t n)
 
 uint_fast64_t generate_prime()
 {
-    uint_fast64_t lower = INT64_MAX / 2 + (rand() %  (INT64_MAX / 2));
-    uint_fast64_t upper = INT64_MAX;
+    uint_fast64_t lower = UINT_FAST64_MAX / 2 + (rand() %  (UINT_FAST64_MAX / 2));
+    uint_fast64_t upper = UINT_FAST64_MAX;
     int flag;
 
     while (lower < upper)
@@ -197,8 +197,45 @@ uint_fast64_t generate_coprime(uint_fast64_t n) {
     }
 }
 
+uint_fast64_t mod_inverse_naive(uint_fast64_t n, uint_fast64_t m) 
+{ 
+    n = n % m;
+
+    for (int d = 1; d < m; ++d) 
+        if ((n * d) % m == 1) 
+            return d; 
+}
+
+uint_fast64_t mod_inverse(uint_fast64_t n, uint_fast64_t m) 
+{ 
+    uint_fast64_t m1 = m;
+    uint_fast64_t y = 0;
+    uint_fast64_t x = 1;
+
+    if (m == 1) return 0;
+
+    while(n > 1)
+    {
+        uint_fast64_t quotient = n / m;
+
+        // Default euclid algorithm for gcd        
+        uint_fast64_t t = m;
+        m = n % m;
+        n = t;
+
+        y = x - quotient * y;
+        x = t;
+    }
+
+    if (x < 0) x += m1;
+    return x;
+}
+
 KeyPair *generate_keypairs()
 {
+    // Public and private keys
+    KeyPair *Keys = malloc(sizeof(KeyPair) * 2);
+
     uint_fast64_t p = generate_prime();
     uint_fast64_t q = generate_prime();
 
@@ -206,8 +243,17 @@ KeyPair *generate_keypairs()
 
     uint_fast64_t totient = (p - 1) * (q - 1);
     uint_fast64_t e = generate_coprime(totient);
+    uint_fast64_t d = mod_inverse(e, totient);
     
+    Keys[0].type = PUBLIC_KEY;
+    Keys[0].key_part_1 = e;
+    Keys[0].key_part_2 = n;
 
+    Keys[1].type = PRIVATE_KEY;
+    Keys[1].key_part_1 = d;
+    Keys[1].key_part_2 = n;
+
+    return Keys;
 }
 
 char *RSA_encrypt(char *input, KeyPair public);
