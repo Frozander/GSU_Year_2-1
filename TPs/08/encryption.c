@@ -46,19 +46,36 @@ char *caesar_cipher_decrypt(char *input, int offset)
 
 // Vigenere
 
+char *generate_vigenere_key(char *input, int msg_len)
+{
+    char *new_key = malloc(sizeof(char) * msg_len);
+    int key_len = strlen(input);
+    int j = 0;
+    for (size_t i = 0; i < msg_len; ++i, ++j)
+    {
+        if (j == key_len) j = 0;
+        new_key[i] = input[j];
+    }
+    return new_key;
+}
+
 char *vignere_cipher_encrypt(char *input, char *ref)
 {
     char *new_str = strdup(input);
     int str_len = strlen(input);
 
+    char *key = generate_vigenere_key(ref, str_len);
     for (int i = 0; i < str_len; ++i)
         if (isalpha(new_str[i]))
         {
-            int new_val = (input[i] + ref[i]) % 26;
-
-            new_val += 'A';
+            int new_val = (input[i] + key[i]);
+            if(isupper(new_str[i]))
+                new_val = mod(new_val - 'A', 26) + 'A';
+            else
+                new_val = mod(new_val - 'a', 26) + 'a';
             new_str[i] = new_val;
         }
+    free(key);
     return new_str;
 }
 
@@ -67,14 +84,18 @@ char *vignere_cipher_decrypt(char *input, char *ref)
     char *new_str = strdup(input);
     int str_len = strlen(input);
 
+    char *key = generate_vigenere_key(ref, str_len);
     for (int i = 0; i < str_len; ++i)
         if (isalpha(new_str[i]))
         {
-            int new_val = (input[i] - ref[i]) % 26;
-
-            new_val += 'A';
+            int new_val = (input[i] - key[i]);
+            if(isupper(new_str[i]))
+                new_val = mod(new_val - 'A', 26) + 'A';
+            else
+                new_val = mod(new_val - 'a', 26) + 'a';
             new_str[i] = new_val;
         }
+    free(key);
     return new_str;
 }
 
