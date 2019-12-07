@@ -76,4 +76,49 @@ void test()
     printf("%s -> %s -> %s\n", string_test_5, buffer, buffer_1);
     free(buffer);
     free(buffer_1);
+
+    printf("\n\n\n");
+    // Matrix Cipher
+    
+    int col = 5, row = 5;
+
+    buffer = matrix_cipher_encrypt(string_test_1, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_1, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    buffer = matrix_cipher_encrypt(string_test_2, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_2, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    buffer = matrix_cipher_encrypt(string_test_3, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_3, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    buffer = matrix_cipher_encrypt(string_test_4, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_4, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    buffer = matrix_cipher_encrypt(string_test_5, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_5, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    char string_test_6[] = "Hello my friend. It is I";
+
+    buffer = matrix_cipher_encrypt(string_test_6, row, col);
+    buffer_1 = matrix_cipher_decrypt(buffer, col, row);
+    printf("%s -> %s -> %s\n", string_test_6, buffer, buffer_1);
+    free(buffer);
+    free(buffer_1);
+
+    printf("Only works for strings that have the length that has an integer square root, like 3x3 or 4x4\n\n");
 }

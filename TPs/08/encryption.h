@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include <stdint.h>
 
+#define PADDING 0
+
 #define PUBLIC_KEY 1
 #define PRIVATE_KEY 0
 

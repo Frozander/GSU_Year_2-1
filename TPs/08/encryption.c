@@ -99,6 +99,8 @@ char *vignere_cipher_decrypt(char *input, char *ref)
     return new_str;
 }
 
+// Matrix Cipher
+
 char *matrix_cipher_encrypt(char *input, int row, int col)
 {
     char *new_str = malloc(strlen(input) * sizeof(char));
@@ -109,45 +111,36 @@ char *matrix_cipher_encrypt(char *input, int row, int col)
 
     for (i = 0; i < row; ++i)
         for (j = 0; j < col; ++j)
-            while (cur < str_len)
+        {
+            if (cur < str_len)
             {
-                matrix[j + i * row] = input[cur++];
+                matrix[j + i * row] = input[cur];
+                ++cur;
             }
+            else
+                matrix[j + i * row] = PADDING;
+        }
 
     cur = 0;
 
     for (i = 0; i < col; ++i)
         for (j = 0; j < row; ++j)
-            while (cur < str_len)
+        {
+            if (matrix[i + j * row] == PADDING) continue;
+            if (cur < str_len)
             {
-                new_str[cur++] = matrix[i + j * row];
-            }
+                new_str[cur] = matrix[i + j * row];
+                ++cur;
+            } else break;
+        }
 
+    free(matrix);
     return new_str;
 }
 
 char *matrix_cipher_decrypt(char *input, int row, int col)
 {
-    char *new_str = malloc(strlen(input) * sizeof(char));
-    char *matrix = malloc(row * col * sizeof(char));
-    int str_len = strlen(input);
-    size_t i, j;
-    int cur = 0;
-
-
-    for (i = 0; i < col; ++i)
-        for (j = 0; j < row; ++j)
-            if (!(cur < str_len)) break;
-            matrix[j + i * row] = input[cur++];
-
-    cur = 0;
-
-    for (i = 0; i < row; ++i)
-        for (j = 0; j < col; ++j)
-            if (!(cur < str_len)) break;
-            new_str[cur++] = matrix[i + j * row];
-
-    return new_str;
+    return matrix_cipher_encrypt(input, col, row);
 }
 
 int gcd(int a, int b)
