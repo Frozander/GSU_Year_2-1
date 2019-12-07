@@ -2,62 +2,56 @@
 
 char to_lower(char c)
 {
-    if (c >= 'A' && c <= 'Z')
-        c -= 'A' - 'a';
+    if (isalpha(c))
+        c += 'a' - 'A';
     return c;
 }
 
 char to_upper(char c)
 {
-    if (c >= 'a' && c <= 'z')
-        c += 'A' - 'a';
+    if (isalpha(c))
+        c -= 'a' - 'A';
     return c;
 }
 
-// Caesar
+// C'deki % operatörü teknik olarak bölme değil'de kalan operatörü olduğu için buna ihtiyacım vardı
+int mod(int a, int b)
+{
+    int r = a % b;
+    return r < 0 ? r + b : r;
+}
 
+// Caesar
 char *caesar_cipher_encrypt(char *input, int offset)
 {
-    offset %= 26;
     char* new_str = strdup(input);
     int str_len = strlen(input);
-    // Sanitize
-    for (int i = 0; i < str_len; ++i)
-        new_str[i] = to_lower(input[i]);
     
     for (int i = 0; i < str_len; ++i)
         if (isalpha(new_str[i]))
         {
-            int new_val = new_str[i] + offset;
-            while (new_val > 'z')
-                new_val = (new_val % 'z') + 'a';
-            while (new_val < 'a')
-                new_val = 'z' - (new_val - 'a');
-            new_str[i] = new_val;
+            if (isupper(new_str[i]))
+                new_str[i] = (mod((new_str[i] + offset - 'A'), 26)) + 'A';
+            else
+                new_str[i] = (mod((new_str[i] + offset - 'a'), 26)) + 'a';
         }
-    return  new_str;
+    return new_str;
 }
 
 char *caesar_cipher_decrypt(char *input, int offset)
 {
-    offset %= 26;
     char* new_str = strdup(input);
     int str_len = strlen(input);
-    // Sanitize
-    for (int i = 0; i < str_len; ++i)
-        new_str[i] = to_lower(input[i]);
     
     for (int i = 0; i < str_len; ++i)
         if (isalpha(new_str[i]))
         {
-            int new_val = new_str[i] - offset;
-            while (new_val > 'z')
-                new_val = (new_val % 'z') + 'a';
-            while (new_val < 'a')
-                new_val = 'z' - (new_val - 'a');
-            new_str[i] = new_val;
+            if (isupper(new_str[i]))
+                new_str[i] = (mod((new_str[i] - offset - 'A'), 26)) + 'A';
+            else
+                new_str[i] = (mod((new_str[i] - offset - 'a'), 26)) + 'a';
         }
-    return  new_str;
+    return new_str;
 }
 
 // Vigenere
@@ -97,7 +91,7 @@ char *vignere_cipher_decrypt(char *input, char *ref)
 char *matrix_cipher_encrypt(char *input, int row, int col)
 {
     char *new_str = malloc(strlen(input) * sizeof(char));
-    char *matrix = malloc(n * m * sizeof(char));
+    char *matrix = malloc(row * col * sizeof(char));
     int str_len = strlen(input);
     size_t i, j;
     int cur = 0;
@@ -124,7 +118,7 @@ char *matrix_cipher_encrypt(char *input, int row, int col)
 char *matrix_cipher_decrypt(char *input, int row, int col)
 {
     char *new_str = malloc(strlen(input) * sizeof(char));
-    char *matrix = malloc(n * m * sizeof(char));
+    char *matrix = malloc(row * col * sizeof(char));
     int str_len = strlen(input);
     size_t i, j;
     int cur = 0;
@@ -183,8 +177,7 @@ uint_fast64_t generate_prime()
 
 uint_fast64_t is_coprime(uint_fast64_t n, uint_fast64_t m)
 {
-    if (gcd(n, m) == 1) return 1;
-    return 0;
+    return gcd(n, m) == 1;
 }
 
 uint_fast64_t generate_coprime(uint_fast64_t n) { 
