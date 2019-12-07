@@ -27,7 +27,7 @@ char *caesar_cipher_encrypt(char *input, int offset)
 {
     char* new_str = strdup(input);
     int str_len = strlen(input);
-    
+
     for (int i = 0; i < str_len; ++i)
         if (isalpha(new_str[i]))
         {
@@ -115,7 +115,7 @@ char *matrix_cipher_encrypt(char *input, int row, int col)
             }
 
     cur = 0;
-    
+
     for (i = 0; i < col; ++i)
         for (j = 0; j < row; ++j)
             while (cur < str_len)
@@ -123,7 +123,7 @@ char *matrix_cipher_encrypt(char *input, int row, int col)
                 new_str[cur++] = matrix[i + j * row];
             }
 
-    return new_str;    
+    return new_str;
 }
 
 char *matrix_cipher_decrypt(char *input, int row, int col)
@@ -134,20 +134,20 @@ char *matrix_cipher_decrypt(char *input, int row, int col)
     size_t i, j;
     int cur = 0;
 
-    
+
     for (i = 0; i < col; ++i)
         for (j = 0; j < row; ++j)
             if (!(cur < str_len)) break;
             matrix[j + i * row] = input[cur++];
 
     cur = 0;
-    
+
     for (i = 0; i < row; ++i)
         for (j = 0; j < col; ++j)
             if (!(cur < str_len)) break;
             new_str[cur++] = matrix[i + j * row];
 
-    return new_str;    
+    return new_str;
 }
 
 int gcd(int a, int b)
@@ -191,7 +191,7 @@ uint_fast64_t is_coprime(uint_fast64_t n, uint_fast64_t m)
     return gcd(n, m) == 1;
 }
 
-uint_fast64_t generate_coprime(uint_fast64_t n) { 
+uint_fast64_t generate_coprime(uint_fast64_t n) {
     uint64_t coprime;
     while (1)
     {
@@ -201,17 +201,17 @@ uint_fast64_t generate_coprime(uint_fast64_t n) {
     }
 }
 
-uint_fast64_t mod_inverse_naive(uint_fast64_t n, uint_fast64_t m) 
-{ 
+uint_fast64_t mod_inverse_naive(uint_fast64_t n, uint_fast64_t m)
+{
     n = n % m;
 
-    for (int d = 1; d < m; ++d) 
-        if ((n * d) % m == 1) 
-            return d; 
+    for (int d = 1; d < m; ++d)
+        if ((n * d) % m == 1)
+            return d;
 }
 
-uint_fast64_t mod_inverse(uint_fast64_t n, uint_fast64_t m) 
-{ 
+uint_fast64_t mod_inverse(uint_fast64_t n, uint_fast64_t m)
+{
     uint_fast64_t m1 = m;
     uint_fast64_t y = 0;
     uint_fast64_t x = 1;
@@ -222,7 +222,7 @@ uint_fast64_t mod_inverse(uint_fast64_t n, uint_fast64_t m)
     {
         uint_fast64_t quotient = n / m;
 
-        // Default euclid algorithm for gcd        
+        // Default euclid algorithm for gcd
         uint_fast64_t t = m;
         m = n % m;
         n = t;
@@ -248,7 +248,7 @@ KeyPair *generate_keypairs()
     uint_fast64_t totient = (p - 1) * (q - 1);
     uint_fast64_t e = generate_coprime(totient);
     uint_fast64_t d = mod_inverse(e, totient);
-    
+
     Keys[0].type = PUBLIC_KEY;
     Keys[0].key_part_1 = e;
     Keys[0].key_part_2 = n;

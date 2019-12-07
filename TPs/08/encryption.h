@@ -28,15 +28,10 @@ char *vignere_cipher_decrypt(char *input, char *ref);
 char *matrix_cipher_encrypt(char *input, int row, int col);
 char *matrix_cipher_decrypt(char *input, int row, int col); // Enter reverse of encrypt as dimensions
 
-
 int gcd(int a, int b);
 int is_prime(uint_fast64_t n);
 KeyPair *generate_keypairs();
 char *RSA_encrypt(char *input, KeyPair public);
 char *RSA_decrypt(char *input, KeyPair private);
-
-
-
-
 
 #endif
