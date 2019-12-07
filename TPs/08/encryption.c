@@ -14,7 +14,8 @@ char to_upper(char c)
     return c;
 }
 
-// C'deki % operatörü teknik olarak bölme değil'de kalan operatörü olduğu için buna ihtiyacım vardı
+// In C % is not a modulo operator but a remainder operator.
+// So I had to use a custom mod function
 int mod(int a, int b)
 {
     int r = a % b;

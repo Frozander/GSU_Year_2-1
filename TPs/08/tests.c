@@ -1,9 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "encryption.h"
+#include "tests.h"
 
-int main()
+void test()
 {
     // Test Strings
     char string_test_1[] = "hello, world!";
@@ -47,6 +45,4 @@ int main()
     printf("%s -> %s -> %s\n\n", string_test_5, buffer, buffer_1);
     free(buffer);
     free(buffer_1);
-
-    return 0;
 }
