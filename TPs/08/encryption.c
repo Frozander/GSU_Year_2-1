@@ -41,18 +41,7 @@ char *caesar_cipher_encrypt(char *input, int offset)
 
 char *caesar_cipher_decrypt(char *input, int offset)
 {
-    char* new_str = strdup(input);
-    int str_len = strlen(input);
-    
-    for (int i = 0; i < str_len; ++i)
-        if (isalpha(new_str[i]))
-        {
-            if (isupper(new_str[i]))
-                new_str[i] = (mod((new_str[i] - offset - 'A'), 26)) + 'A';
-            else
-                new_str[i] = (mod((new_str[i] - offset - 'a'), 26)) + 'a';
-        }
-    return new_str;
+    return caesar_cipher_encrypt(input, -offset);
 }
 
 // Vigenere
