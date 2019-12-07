@@ -25,3 +25,6 @@ test/*
 bin/
 # or
 */bin/*
+
+# Ignore binaries
+*.out
