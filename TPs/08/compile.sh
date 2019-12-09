@@ -1,1 +1,1 @@
-gcc main.c tests.c encryption.c -lm -o program
+gcc main.c tests.c encryption.c mtwister.c -lm -o program

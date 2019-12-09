@@ -121,4 +121,41 @@ void test()
     free(buffer_1);
 
     printf("Only works for strings that have the length that has an integer square root, like 3x3 or 4x4\n\n");
+
+    // RSA Cipher Test
+
+    KeyPair *Keys = generate_keypairs();
+    long long int *int_buffer;
+
+    int_buffer = RSA_encrypt(string_test_1, Keys[0]);
+    buffer_1 = RSA_decrypt(int_buffer, strlen(string_test_1), Keys[1]);
+    printf("%s -> Too many numbers -> %s\n", string_test_1, buffer_1);
+    free(int_buffer);
+    free(buffer_1);
+
+    int_buffer = RSA_encrypt(string_test_2, Keys[0]);
+    buffer_1 = RSA_decrypt(int_buffer, strlen(string_test_2), Keys[1]);
+    printf("%s -> Too many numbers -> %s\n", string_test_2, buffer_1);
+    free(int_buffer);
+    free(buffer_1);
+
+    int_buffer = RSA_encrypt(string_test_3, Keys[0]);
+    buffer_1 = RSA_decrypt(int_buffer, strlen(string_test_3), Keys[1]);
+    printf("%s -> Too many numbers -> %s\n", string_test_3, buffer_1);
+    free(int_buffer);
+    free(buffer_1);
+
+    int_buffer = RSA_encrypt(string_test_4, Keys[0]);
+    buffer_1 = RSA_decrypt(int_buffer, strlen(string_test_4), Keys[1]);
+    printf("%s -> Too many numbers -> %s\n", string_test_4, buffer_1);
+    free(int_buffer);
+    free(buffer_1);
+
+    int_buffer = RSA_encrypt(string_test_5, Keys[0]);
+    buffer_1 = RSA_decrypt(int_buffer, strlen(string_test_5), Keys[1]);
+    printf("%s -> Too many numbers -> %s\n", string_test_5, buffer_1);
+    free(int_buffer);
+    free(buffer_1);
+
+    printf("\n\n\n");
 }
