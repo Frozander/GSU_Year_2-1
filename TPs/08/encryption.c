@@ -22,12 +22,6 @@ int mod(int a, int b)
     return r < 0 ? r + b : r;
 }
 
-long long int mod_64(long long int a, long long int b)
-{
-    int r = a % b;
-    return r < 0 ? r + b : r;
-}
-
 // Caesar
 char *caesar_cipher_encrypt(char *input, int offset)
 {
@@ -110,58 +104,62 @@ char *vignere_cipher_decrypt(char *input, char *ref)
 int is_square(int x)
 {
     int r = sqrt(x);
-    if ((r * r) == x) return 1;
+    if ((r * r) == x) return r;
+    else return r + 1;
 }
 
-char *matrix_cipher_encrypt(char *input, int row, int col)
+char *matrix_cipher_encrypt(char *input)
 {
     int str_len = strlen(input);
-    if(!is_square(str_len)){
-        printf("Input is not a square of an integer!\n");
-        return input;
-    }
-    char *new_str = malloc(strlen(input) * sizeof(char));
-    char *matrix = malloc(row * col * sizeof(char));
-    size_t i, j;
+    for (int c = 0; c < str_len; ++c)
+        if (c == PADDING){
+            printf("Padding character detected in the string: %c", PADDING);
+            return input;
+        }
+    int size = is_square(str_len);
+    char *new_str = malloc(size * size * sizeof(char));
+    int matrix[size][size];
+    size_t i;
+
     int cur = 0;
+    for (i = 0; i < size * size; ++i, ++cur)
+    {
+        if (cur < str_len)
+            matrix[i / size][i % size] = input[cur];
+        else
+            matrix[i / size][i % size] = PADDING;
+    }
 
-    for (i = 0; i < row; ++i)
-        for (j = 0; j < col; ++j)
-        {
-            if (cur < str_len)
-            {
-                matrix[j + i * row] = input[cur];
-                ++cur;
-            }
-            else
-                matrix[j + i * row] = PADDING;
-        }
+    for (i = 0; i < size * size; ++i)
+        new_str[i] = matrix[i % size][i / size];
 
-    cur = 0;
-
-    for (i = 0; i < col; ++i)
-        for (j = 0; j < row; ++j)
-        {
-            if (matrix[i + j * row] == PADDING) continue;
-            if (cur < str_len)
-            {
-                new_str[cur] = matrix[i + j * row];
-                ++cur;
-            } else break;
-        }
-
-    free(matrix);
     return new_str;
 }
 
-char *matrix_cipher_decrypt(char *input, int row, int col)
+char *matrix_cipher_decrypt(char *input)
 {
     int str_len = strlen(input);
-    if(!is_square(str_len)){
-        printf("Input is not a square of an integer!\n");
-        return input;
+    int size = is_square(str_len);
+    char *new_str = malloc(size * size * sizeof(char));
+    int matrix[size][size];
+    size_t i;
+
+    int cur = 0;
+    for (i = 0; i < size * size; ++i, ++cur)
+    {
+        if (cur < str_len)
+            matrix[i / size][i % size] = input[cur];
+        else
+            matrix[i / size][i % size] = PADDING;
     }
-    return matrix_cipher_encrypt(input, col, row);
+
+    for (i = 0; i < size * size; ++i)
+    {
+        if(matrix[i % size][i / size] == PADDING) continue;
+        new_str[i] = matrix[i % size][i / size];
+    }
+    
+    return new_str;
 }
 
 int gcd(int a, int b)
@@ -177,20 +175,20 @@ int gcd(int a, int b)
     }
 }
 
-int is_prime(long long int n)
+int is_prime(long double n)
 {
     long double sqr = sqrtl(n);
     for(int i= 2; i <= sqr; ++i)
-        if(n%i==0)
+        if(fmodl(n, i)==0)
             return 0;
     return 1;
 }
+/*
 
-long long int generate_prime()
+long double generate_prime()
 {
-    MTRand r = seedRand(time(NULL));
-    long long int lower = genRandLong(&r) %  (INT16_MAX/2);
-    long long int upper = INT16_MAX;
+    long double lower = rand() %  (INT16_MAX/2);
+    long double upper = INT16_MAX;
     int flag;
 
     printf("Generating Prime... This might take long...\n");
@@ -203,25 +201,24 @@ long long int generate_prime()
     }
 }
 
-long long int is_coprime(long long int n, long long int m)
+long double is_coprime(long double n, long double m)
 {
     return gcd(n, m) == 1;
 }
 
-long long int generate_coprime(long long int n)
+long double generate_coprime(long double n)
 {
     uint64_t coprime;
-    MTRand r = seedRand(time(NULL) + __LINE__);
     printf("Generating Coprime... This might take long...\n");
     while (1)
     {
-        coprime = (genRandLong(&r) % RAND_MAX - 2) + 2;
+        coprime = (rand() % RAND_MAX - 2) + 2;
         if (is_coprime(coprime, n))
             return coprime;
     }
 }
 
-long long int mod_inverse_naive(long long int n, long long int m)
+long double mod_inverse_naive(long double n, long double m)
 {
     n = n % m;
 
@@ -230,20 +227,20 @@ long long int mod_inverse_naive(long long int n, long long int m)
             return d;
 }
 
-long long int mod_inverse(long long int n, long long int m)
+long double mod_inverse(long double n, long double m)
 {
-    long long int m1 = m;
-    long long int y = 0;
-    long long int x = 1;
+    long double m1 = m;
+    long double y = 0;
+    long double x = 1;
 
     if (m == 1) return 0;
 
     while(n > 1)
     {
-        long long int quotient = n / m;
+        long double quotient = n / m;
 
         // Default euclid algorithm for gcd
-        long long int t = m;
+        long double t = m;
         m = n % m;
         n = t;
 
@@ -260,18 +257,18 @@ KeyPair *generate_keypairs()
     // Public and private keys
     KeyPair *Keys = malloc(sizeof(KeyPair) * 2);
 
-    long long int p = generate_prime();
-    long long int q = generate_prime();
-    printf("%lld\n", p);
-    printf("%lld\n", q);
+    long double p = generate_prime();
+    long double q = generate_prime();
+    printf("%LF\n", p);
+    printf("%LF\n", q);
 
-    long long int n = p * q;
+    long double n = p * q;
 
-    long long int totient = (p - 1) * (q - 1);
-    long long int e = generate_coprime(totient);
-    printf("%lld\n", e);
+    long double totient = (p - 1) * (q - 1);
+    long double e = generate_coprime(totient);
+    printf("%LF\n", e);
 
-    long long int d = mod_inverse_naive(e, totient);
+    long double d = mod_inverse_naive(e, totient);
 
     Keys[0].type = PUBLIC_KEY;
     Keys[0].key_part_1 = e;
@@ -283,32 +280,53 @@ KeyPair *generate_keypairs()
 
     return Keys;
 }
+*/
+// So almost all the functions above are useless...
 
-long long int *RSA_encrypt(char *input, KeyPair public)
+long double *RSA_encrypt(char *input, int p, int q)
 {
-    size_t str_len = strlen(input);
-    long long int *new_str = malloc(sizeof(long long int) * str_len);
+    if (!is_prime(p) || !is_prime(q)) return NULL;
 
-    if (public.type == PUBLIC_KEY)
-        for (size_t i = 0; i < str_len; ++i)
-        {
-            new_str[i] = mod_64(input[i] * public.key_part_1, public.key_part_2);
-        }
-    else
-        printf("\nRSA Encryption Error: Not a public key!\n");
+    long double str_len = strlen(input);
+
+    long double n = p * q;
+    long double e = 2;   // I tried to do this all randomly but
+    long double totient; // C doesn't have enough randomness/math functions built-in
+    totient = (p - 1) * (q - 1);
+
+    while (e++ < totient)
+        if(gcd(e, totient) == 1) break;
+    
+    long double d = (1 + (2 * totient)) / e;
+
+    long double *rsa_values = malloc(str_len * sizeof(long double));
+    for (size_t i = 0; i < str_len; ++i)
+        rsa_values[i] = fmodl(pow(tolower(input[i]) - 96, e), n);
+    return rsa_values;
+}
+
+char *RSA_decrypt(long double *input, size_t size, int p, int q)
+{
+    if (!is_prime(p) || !is_prime(q)) return NULL;
+
+    long double n = p * q;
+    long double e = 2;   // I tried to do this all randomly but
+    long double totient; // C doesn't have enough randomness/math functions built-in
+    totient = (p - 1) * (q - 1);
+
+    while (e++ < totient)
+        if(gcd(e, totient) == 1) break;
+    
+    long double d = (1 + (2 * totient)) / e;
+
+    char *new_str = malloc(sizeof(char) * size);
+    for (size_t i = 0; i < size; ++i)
+        new_str[i] = fmodl(pow(tolower(input[i]), d), n) + 96;
     return new_str;
 }
 
-char *RSA_decrypt(long long int *input, size_t size, KeyPair private)
+void rsa_print(long double *input, size_t size)
 {
-    char *new_str = malloc(sizeof(char) * size);
-
-    if (private.type == PRIVATE_KEY)
-        for (size_t i = 0; i < size; ++i)
-        {
-            new_str[i] = (char) mod_64(input[i] * private.key_part_1, private.key_part_2);
-        }
-    else
-        printf("\nRSA Decryption Error: Not a public key!\n");
-        return new_str;
+    for (size_t i = 0; i < size; ++i)
+        printf("%.0LF-", input[i]);
 }
