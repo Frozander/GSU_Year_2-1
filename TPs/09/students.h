@@ -43,8 +43,8 @@ typedef struct __student_list
 typedef struct __student_bst
 {
     Student *data;
-    struct __student_list *left;
-    struct __student_list *right;
+    struct __student_bst *left;
+    struct __student_bst *right;
 } Student_BST;
 
 States add_student(Student_DL **root, char *name, char *surname);
