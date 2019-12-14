@@ -6,11 +6,11 @@ Student *create_student(char *name, char *surname)
 
     strcpy(new_student->name, name);
     strcpy(new_student->surname, surname);
-    new_student->mean = 0.0f;
+    new_student->mean = 0.0f; // TODO: Change when mean calculation function is ready
     for (short i = 0; i < 3; ++i)
-        new_student->notes[i] = 0;
+        new_student->notes[i] = give_random_credits();
     for (short i = 0; i < 3; ++i)
-        new_student->credits[i] = 0;
+        new_student->credits[i] = give_random_credits();
     
     return new_student;
 }
@@ -40,8 +40,20 @@ States add_student(Student_DL **root, char *name, char *surname)
     new_node->data = create_student(name, surname);
     
     // Pointer management
+    new_node->next = cursor->next;
     cursor->next = new_node;
     new_node->prev = cursor;
-    new_node->next = NULL;
+    if (new_node->next != NULL) 
+        new_node->next->prev = new_node; 
     return SUCCESS;
+}
+
+float give_random_note()
+{
+    return (float) (rand() % 201) / 2.0f;
+}
+
+int give_random_credits()
+{
+    return (rand() % 3) + 3;
 }

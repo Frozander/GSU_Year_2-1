@@ -15,12 +15,12 @@ typedef enum __states
 
 typedef enum __note_bottom 
 {
-    AA,
-    BB,
-    CB,
-    CC,
+    F,
     D,
-    F
+    CC,
+    BB,
+    BA,
+    AA
 } Note;
 
 typedef struct __student
@@ -39,7 +39,18 @@ typedef struct __student_list
     struct __student_list *next;
 } Student_DL;
 
+// Technically is the same but exists just for consistent function definitions
+typedef struct __student_bst
+{
+    Student *data;
+    struct __student_list *left;
+    struct __student_list *right;
+} Student_BST;
+
 States add_student(Student_DL **root, char *name, char *surname);
 Student *create_student(char *name, char *surname);
+
+float give_random_note();
+int give_random_credits();
 
 #endif
