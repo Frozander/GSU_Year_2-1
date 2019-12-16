@@ -64,4 +64,6 @@ int give_random_credits();
 // For unexpected values (e.g. -3, 132) the function returns: "NaN"
 char *num_to_char_grade(float num_grade);
 
+Student_BST add_tree_node(Student_BST **root, char *name, char *surname);
+
 #endif

@@ -16,7 +16,6 @@ Student *create_student(char *name, char *surname)
         new_student->mean += (new_student->credits[i] * new_student->notes[i]);
     }
     new_student->mean /= (float) total_credits;
-    
     return new_student;
 }
 
@@ -40,17 +39,25 @@ States add_student(Student_DL **root, char *name, char *surname)
     // Create new node
     Student_DL *new_node = malloc(sizeof(Student_DL));
     if (new_node == NULL) return MALLOC_ERR; // Malloc Error
-
     // Create new student
     new_node->data = create_student(name, surname);
-    
     // Pointer management
-    new_node->next = cursor->next;
-    cursor->next = new_node;
-    new_node->prev = cursor;
-    if (new_node->next != NULL) 
-        new_node->next->prev = new_node; 
-    return SUCCESS;
+    if (cursor->prev == NULL)
+    {
+        cursor->prev = new_node;
+        new_node->prev = NULL;
+        new_node->next = cursor;
+        return SUCCESS;
+    } else
+    {
+        new_node->next = cursor->next;
+        cursor->next = new_node;
+        new_node->prev = cursor;
+        if (new_node->next != NULL)
+            new_node->next->prev = new_node; 
+        return SUCCESS;
+    }
+    return FAIL;
 }
 
 float give_random_note()
