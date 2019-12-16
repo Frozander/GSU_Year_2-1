@@ -13,17 +13,6 @@ typedef enum __states
     MALLOC_ERR,
 } States;
 
-// TODO: Seems useless right now. Propably will remove
-typedef enum __note_bottom 
-{
-    F,
-    D,
-    CC,
-    BB,
-    BA,
-    AA
-} Note;
-
 // A struct that holds notes and identification of a student
 // Includes:
 //  char    name[NAME_LEN_MAX]

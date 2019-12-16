@@ -6,7 +6,7 @@ Student *create_student(char *name, char *surname)
     int total_credits = 0;
     strcpy(new_student->name, name);
     strcpy(new_student->surname, surname);
-    new_student->mean = 0.0f; // TODO: Change when mean calculation function is ready
+    new_student->mean = 0.0f;
     for (short i = 0; i < 3; ++i)
         new_student->notes[i] = give_random_note();
     for (short i = 0; i < 3; ++i)
