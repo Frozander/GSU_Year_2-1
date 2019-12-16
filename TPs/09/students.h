@@ -28,7 +28,7 @@ typedef struct __student
     char  name[NAME_LEN_MAX];
     char  surname[NAME_LEN_MAX];
     int   credits[3];
-    int   notes[3];
+    float   notes[3];
     float mean;
 } Student;
 
@@ -52,5 +52,16 @@ Student *create_student(char *name, char *surname);
 
 float give_random_note();
 int give_random_credits();
+
+// Takes a numerical grade in the interval [0, 100]
+// and returns a string containging one of the following:
+//  [00 - 50)  -> "F"
+//  [50 - 60)  -> "CC"
+//  [60 - 70)  -> "CB"
+//  [70 - 80)  -> "BB"
+//  [80 - 90)  -> "BA"
+//  [90 - 100] -> "AA"
+// For unexpected values (e.g. -3, 132) the function returns: "NaN"
+char *num_to_char_grade(float num_grade);
 
 #endif

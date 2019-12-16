@@ -57,3 +57,17 @@ int give_random_credits()
 {
     return (rand() % 3) + 3;
 }
+
+char *num_to_char_grade(float num_grade)
+{
+    switch ((int) num_grade)
+    {
+        case  0 ... 49 : return "F";
+        case 50 ... 59 : return "CC";
+        case 60 ... 69 : return "CB";
+        case 70 ... 79 : return "BB";
+        case 80 ... 89 : return "BA";
+        case 90 ... 100: return "AA";
+        default        : return "NaN";
+    }
+}
