@@ -13,6 +13,7 @@ typedef enum __states
     MALLOC_ERR,
 } States;
 
+// TODO: Seems useless right now. Propably will remove
 typedef enum __note_bottom 
 {
     F,
@@ -23,6 +24,16 @@ typedef enum __note_bottom
     AA
 } Note;
 
+// A struct that holds notes and identification of a student
+// Includes:
+//  char    name[NAME_LEN_MAX]
+//  char    surname[NAME_LEN_MAX]
+//  int     credits[3]
+//  float   notes[3]
+//  float   mean
+//  Use create_student(char *name, char *surname) to create a student instance
+//  Or use add_student(Student_DL **root, char *name, char *surname) to add a student to
+//  a Double-Linked List
 typedef struct __student
 {
     char  name[NAME_LEN_MAX];

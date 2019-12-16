@@ -3,14 +3,19 @@
 Student *create_student(char *name, char *surname)
 {
     Student *new_student = malloc(sizeof(Student));
-
+    int total_credits = 0;
     strcpy(new_student->name, name);
     strcpy(new_student->surname, surname);
     new_student->mean = 0.0f; // TODO: Change when mean calculation function is ready
     for (short i = 0; i < 3; ++i)
-        new_student->notes[i] = give_random_credits();
+        new_student->notes[i] = give_random_note();
     for (short i = 0; i < 3; ++i)
+    {
         new_student->credits[i] = give_random_credits();
+        total_credits += new_student->credits[i];
+        new_student->mean += (new_student->credits[i] * new_student->notes[i]);
+    }
+    new_student->mean /= (float) total_credits;
     
     return new_student;
 }
