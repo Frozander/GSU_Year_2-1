@@ -47,6 +47,7 @@ States add_student(Student_DL **root, char *name, char *surname)
         cursor->prev = new_node;
         new_node->prev = NULL;
         new_node->next = cursor;
+        (*root) = new_node;
         return SUCCESS;
     } else
     {
@@ -82,4 +83,37 @@ char *num_to_char_grade(float num_grade)
         case 90 ... 100: return "AA";
         default        : return "NaN";
     }
+}
+
+States add_tree_node(Student_BST **root, Student *student_data)
+{
+    Student_BST *head = (*root);
+    if (head == NULL)
+    {
+        head = malloc(sizeof(Student_BST));
+        head->data = student_data;
+        head->left = NULL;
+        head->right = NULL;
+        return SUCCESS;
+    }
+
+    if(strcmp(head->data->name, student_data->name) >= 0)
+        head->right = add_tree_node(&(head->right), student_data);
+    else
+        head->left = add_tree_node(&(head->left), student_data);
+    return SUCCESS;
+}
+
+Student_BST *feed_to_tree(Student_DL *DL_list)
+{
+    Student_BST *new_tree;
+    States err;
+
+    while (DL_list != NULL)
+    {
+        if (err != SUCCESS) return NULL; // Not really a good way of dealing with errors
+        err = add_tree_node(&new_tree, DL_list->data);
+        DL_list = DL_list->next;
+    }
+    return new_tree;
 }
