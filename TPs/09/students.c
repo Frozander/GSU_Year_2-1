@@ -16,6 +16,7 @@ Student *create_student(char *name, char *surname)
         new_student->mean += (new_student->credits[i] * new_student->notes[i]);
     }
     new_student->mean /= (float) total_credits;
+    new_student->mean = encrypt_student_mean(new_student->mean, name[0], surname[0]);
     return new_student;
 }
 
@@ -118,6 +119,16 @@ Student_BST *feed_to_tree(Student_DL *DL_list)
     return new_tree;
 }
 
+float encrypt_student_mean(float mean, char key1, char key2)
+{
+    return mean * (key1 * key2);
+}
+
+float decrypt_student_mean(float mean, char key1, char key2)
+{
+    return mean / (key1 * key2);
+}
+
 void print_student(Student *student_data)
 {
     printf("Name   : %30s\n", student_data->name);
@@ -126,14 +137,14 @@ void print_student(Student *student_data)
             student_data->credits[0], student_data->notes[0], student_data->char_grades[0],
             student_data->credits[1], student_data->notes[1], student_data->char_grades[1],
             student_data->credits[2], student_data->notes[2], student_data->char_grades[2]);
-    printf("Mean   : %-3.2f", student_data->mean);
+    printf("Mean   : %-3.2f", decrypt_student_mean(student_data->mean, student_data->name[0], student_data->surname[0]));
 }
 
 void means_with_threshold(Student_DL *DL_list, float threshold)
 {
     while (DL_list != NULL)
     {
-        if(DL_list->data->mean > threshold)
+        if(decrypt_student_mean(DL_list->data->mean, DL_list->data->name[0], DL_list->data->surname[0]) > threshold)
             print_student(DL_list->data);
         DL_list = DL_list->next;
     }
