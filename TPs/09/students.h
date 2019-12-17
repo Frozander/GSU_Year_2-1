@@ -2,6 +2,7 @@
 #define __USR_STUDENT_H_
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #define NAME_LEN_MAX 50

@@ -101,11 +101,12 @@ States add_tree_node(Student_BST **root, Student *student_data)
         return SUCCESS;
     }
 
+    int err;
     if(strcmp(head->data->name, student_data->name) >= 0)
-        head->right = add_tree_node(&(head->right), student_data);
+        err = add_tree_node(&(head->right), student_data);
     else
-        head->left = add_tree_node(&(head->left), student_data);
-    return SUCCESS;
+        err = add_tree_node(&(head->left), student_data);
+    return err;
 }
 
 Student_BST *feed_to_tree(Student_DL *DL_list)
