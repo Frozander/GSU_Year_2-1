@@ -8,7 +8,10 @@ Student *create_student(char *name, char *surname)
     strcpy(new_student->surname, surname);
     new_student->mean = 0.0f;
     for (short i = 0; i < 3; ++i)
+    {
         new_student->notes[i] = give_random_note();
+        strcpy(new_student->char_grades[i], num_to_char_grade(new_student->notes[i]));
+    }
     for (short i = 0; i < 3; ++i)
     {
         new_student->credits[i] = give_random_credits();
