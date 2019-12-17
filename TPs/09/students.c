@@ -117,3 +117,24 @@ Student_BST *feed_to_tree(Student_DL *DL_list)
     }
     return new_tree;
 }
+
+void print_student(Student *student_data)
+{
+    printf("Name   : %30s\n", student_data->name);
+    printf("Surname: %30s\n", student_data->surname);
+    printf("Grades : English[%d]->(%-3.2f, %2s) Maths[%d]->(%-3.2f, %2s) Physics[%d]->(%-3.2f, %2s)\n",
+            student_data->credits[0], student_data->notes[0], student_data->char_grades[0],
+            student_data->credits[1], student_data->notes[1], student_data->char_grades[1],
+            student_data->credits[2], student_data->notes[2], student_data->char_grades[2]);
+    printf("Mean   : %-3.2f", student_data->mean);
+}
+
+void means_with_threshold(Student_DL *DL_list, float threshold)
+{
+    while (DL_list != NULL)
+    {
+        if(DL_list->data->mean > threshold)
+            print_student(DL_list->data);
+        DL_list = DL_list->next;
+    }
+}

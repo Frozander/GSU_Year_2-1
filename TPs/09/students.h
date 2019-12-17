@@ -29,6 +29,7 @@ typedef struct __student
     char  surname[NAME_LEN_MAX];
     int   credits[3];
     float   notes[3];
+    char  char_grades[3][3];
     float mean;
 } Student;
 
@@ -67,6 +68,6 @@ char *num_to_char_grade(float num_grade);
 States add_tree_node(Student_BST **root, Student *student_data);
 Student_BST *feed_to_tree(Student_DL *DL_list);
 
-Student *means_with_threshold(Student_DL *DL_list, float threshold);
+void means_with_threshold(Student_DL *DL_list, float threshold);
 
 #endif
