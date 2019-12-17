@@ -15,8 +15,14 @@
     #error "Your compiler does not support ranges in switch-case statements. Use GCC or Clang"
 #endif
 
-int main(int argc, char const *argv[])
+// C standard library headers
+#include <stdio.h>
+#include <stdlib.h>
+// Internal Headers
+#include "students.h"
+
+int main()
 {
-    /* code */
+    
     return 0;
 }
