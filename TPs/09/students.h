@@ -84,6 +84,7 @@ float decrypt_student_mean(float mean, char key1, char key2);
 Student_BST *add_tree_node(Student_BST *root, Student *student_data);
 // Feeds student data from a Double Linked List to a Binary Search Tree
 Student_BST *feed_to_tree(Student_DL *DL_list);
+void print_tree_inorder(Student_BST *root);
 
 // Prints all the data from a Student struct
 void print_student(Student *student_data);

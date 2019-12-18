@@ -87,7 +87,7 @@ char *num_to_char_grade(float num_grade)
         case 70 ... 79 : return "BB";
         case 80 ... 89 : return "BA";
         case 90 ... 100: return "AA";
-        default        : return "NaN";
+        default        : return "!!";
     }
 }
 
@@ -102,7 +102,7 @@ Student_BST *add_tree_node(Student_BST *root, Student *student_data)
         return root;
     }
 
-    if(strcmp(root->data->name, student_data->name) <= 0)
+    if(strcmp(student_data->name, root->data->name) >= 0)
         root->right = add_tree_node(root->right, student_data);
     else
         root->left = add_tree_node(root->left, student_data);
@@ -111,8 +111,7 @@ Student_BST *add_tree_node(Student_BST *root, Student *student_data)
 
 Student_BST *feed_to_tree(Student_DL *DL_list)
 {
-    Student_BST *new_tree;
-    States err;
+    Student_BST *new_tree = NULL;
 
     while (DL_list != NULL)
     {
@@ -120,6 +119,14 @@ Student_BST *feed_to_tree(Student_DL *DL_list)
         DL_list = DL_list->next;
     }
     return new_tree;
+}
+
+void print_tree_inorder(Student_BST *root)
+{
+    if(root == NULL) return;
+    print_tree_inorder(root->left);
+    print_student(root->data);
+    print_tree_inorder(root->right);
 }
 
 float encrypt_student_mean(float mean, char key1, char key2)
@@ -134,6 +141,7 @@ float decrypt_student_mean(float mean, char key1, char key2)
 
 void print_student(Student *student_data)
 {
+    printf("\n");
     printf("Name   : %s\n", student_data->name);
     printf("Surname: %s\n", student_data->surname);
     printf("Grades : English[%d]->(%-3.2f, %2s) Maths[%d]->(%-3.2f, %2s) Physics[%d]->(%-3.2f, %2s)\n",
@@ -147,7 +155,6 @@ void means_with_threshold(Student_DL *DL_list, float threshold)
 {
     while (DL_list != NULL)
     {
-        printf("\n");
         if(decrypt_student_mean(DL_list->data->mean, DL_list->data->name[0], DL_list->data->surname[0]) > threshold)
             print_student(DL_list->data);
         DL_list = DL_list->next;
