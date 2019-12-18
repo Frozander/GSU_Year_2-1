@@ -55,7 +55,7 @@ typedef struct __student_bst
 Student *create_student(char *name, char *surname);
 
 // Inserts a stundent with random grades into a Double Linked List
-States add_student(Student_DL **root, char *name, char *surname);
+Student_DL *add_student(Student_DL *root, char *name, char *surname);
 
 // Auxhilary function to give a random grade between [0 - 100] to a student
 float give_random_note();
@@ -81,7 +81,7 @@ float encrypt_student_mean(float mean, char key1, char key2);
 float decrypt_student_mean(float mean, char key1, char key2);
 
 // Inserts a stundent with random grades into a Binary Search Tree
-States add_tree_node(Student_BST **root, Student *student_data);
+Student_BST *add_tree_node(Student_BST *root, Student *student_data);
 // Feeds student data from a Double Linked List to a Binary Search Tree
 Student_BST *feed_to_tree(Student_DL *DL_list);
 

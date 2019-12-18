@@ -22,7 +22,13 @@
 #include "students.h"
 
 int main()
-{
+{   
+    Student_DL *list = NULL;
+
+    list = add_student(list, "Batuhan", "Ceylan");
+    list = add_student(list, "Kaan",    "Kırbıyık");
+    list = add_student(list, "Berktan", "Ceylan");
+    means_with_threshold(list, 0);
     
     return 0;
 }
