@@ -12,7 +12,7 @@
 #endif
 // Error if not
 #ifndef CASE_RANGE_SUPPORT
-    #error "Your compiler does not support ranges in switch-case statements. Use GCC or Clang"
+    #error "Your compiler does not support ranges in switch-case statements. Use GCC or Clang... Or manually change the switch case into a series of if-else statements"
 #endif
 
 // C standard library headers
@@ -25,19 +25,64 @@
 int main()
 {   
     srand(clock());
+    int state = -1;
+    float mean = -1.0f;
+    Student *student_data = NULL;
     Student_DL *list = NULL;
     Student_BST *tree = NULL;
+    char name[NAME_LEN_MAX];
+    char surname[NAME_LEN_MAX];
 
-    // Done
-    list = add_student(list, "Batuhan", "Ceylan");
-    list = add_student(list, "Kaan",    "Kırbıyık");
-    list = add_student(list, "Berktan", "Ceylan");
-    //means_with_threshold(list, -1); // Done
+    printf("Welcome to student adding revision TP...\n\n");
+    printf("The program adds every student to both a DL List and a BST Tree\n");
+    printf("Each student has their mean encrypted in case of a possible data leak\n");
+    printf("However I/O functions handle the encryption/decryption for the user\n");
+    printf("Known Issue: Since strcmp is case sensitive, upper case strings always come before lower case strings\n");
+
+    while (1)
+    {
+        printf("\n\n");
+        printf("1) Add a student with random grades\n");
+        printf("2) Display students with average above a threshold\n");
+        printf("3) Display all students\n");
+        printf("4) Exit\n");
+
+        printf("\nInput: ");
+        scanf("%d", &state);
+
+        if (state == 1) {
+            printf("\nName Surname: ");
+            scanf("%s %s", name, surname);
+            
+            student_data = create_student(name, surname);
+
+            list = add_student(list, student_data);
+            tree = add_tree_node(tree, student_data);
+            printf("\nStudent Added!\n");
+            state = -1;
+        } else if (state == 2)
+        {
+            printf("\nMinimum Mean of Grades: ");
+            scanf("%f", &mean);
+            printf("\nHere are students with higher mean grade than %f:\n", mean);
+            means_with_threshold(list, mean);
+            state = -1;
+        } else if (state == 3)
+        {
+            printf("\nDisplaying all students:\n");
+            print_tree_inorder(tree);
+            state = -1;
+        } else if (state == 4)
+        {
+            break;
+        } else
+        {
+            printf("Unrecognised input!\n Reseting the menu!\n\n");
+            state = -1;
+        }
+    }
+
+    printf("\n\nExiting...\n");
     
-    tree = feed_to_tree(list); // Done
-    //print_tree_inorder(tree); // Done
-
-    // Encryption and Decryption works too!
-    // All seems to work
     return 0;
 }

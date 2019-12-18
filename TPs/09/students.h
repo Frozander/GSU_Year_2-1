@@ -55,7 +55,7 @@ typedef struct __student_bst
 Student *create_student(char *name, char *surname);
 
 // Inserts a stundent with random grades into a Double Linked List
-Student_DL *add_student(Student_DL *root, char *name, char *surname);
+Student_DL *add_student(Student_DL *root, Student *student_data);
 
 // Auxhilary function to give a random grade between [0 - 100] to a student
 float give_random_note();

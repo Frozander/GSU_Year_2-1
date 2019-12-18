@@ -24,7 +24,7 @@ Student *create_student(char *name, char *surname)
     return new_student;
 }
 
-Student_DL *add_student(Student_DL *root, char *name, char *surname)
+Student_DL *add_student(Student_DL *root, Student *student_data)
 {
     Student_DL *cursor = root;
     // if no root is present
@@ -32,7 +32,7 @@ Student_DL *add_student(Student_DL *root, char *name, char *surname)
     {
         cursor = malloc(sizeof(Student_DL));
         if (cursor == NULL) return NULL; // Malloc Error
-        cursor->data = create_student(name, surname);
+        cursor->data = student_data;
         cursor->prev = NULL;
         cursor->next = NULL;
         return cursor;
@@ -42,20 +42,21 @@ Student_DL *add_student(Student_DL *root, char *name, char *surname)
     Student_DL *new_node = malloc(sizeof(Student_DL));
     if (new_node == NULL) return NULL; // Malloc Error
     // Create new student
-    new_node->data = create_student(name, surname);
+    new_node->data = student_data;
     if (new_node->data == NULL) return NULL;
 
     // If first value is smaller than head
-    if (strcmp(name, cursor->data->name) <= 0)
+    if (strcmp(student_data->name, root->data->name) <= 0)
     {
-        new_node->next = cursor;
+        new_node->next = root;
         new_node->prev = NULL; // Just in case
         new_node->next->prev = new_node;
-        return new_node;
+        root = new_node;
+        return root;
     }
 
     // Traverse alphabethically
-    while(cursor->next != NULL && strcmp(name, cursor->data->name) <= 0) cursor = cursor->next;
+    while(cursor->next != NULL && strcmp(student_data->name, cursor->next->data->name) > 0) cursor = cursor->next;
     
     // Insert in the right spot (Hopefully...)
     new_node->next = cursor->next;

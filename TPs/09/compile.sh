@@ -1,0 +1,1 @@
+gcc main.c students.c -o tp09 -O3
